@@ -1,3 +1,26 @@
 <resources>
+    <!-- Application Name -->
     <string name="app_name">OCRApplication</string>
+
+    <!-- activity_login.xml -->
+    <!-- The content description for app_logo.PNG-->
+    <string name="content_desc_application_logo">Application Logo</string>
+    <!-- Title of login page -->
+    <string name="login_title">Logbook OCR </string>
+    <!-- The hint for password input -->
+    <string name="login_hint_password">Password</string>
+    <!-- The hint for username input -->
+    <string name="login_hint_username">Username</string>
+    <!-- The label for btnForget in login page -->
+    <string name="login_btnForget">Forget Username or Password</string>
+    <!-- The label for btnLogin in login page -->
+    <string name="login_btnLogin">Login</string>
+
+    <!-- activity_email_login.xml -->
+    <!-- Title of email_login page -->
+    <string name="email_login_recovery_email">Recovery Email</string>
+    <!-- The hint for recovery email input -->
+    <string name="email_login_hint_recovery_email">Enter recovery email</string>
+    <!-- The reminder for user at email_login page -->
+    <string name="email_login_reminder">Don\'t forget to check your username and change your password after login!</string>
 </resources>
