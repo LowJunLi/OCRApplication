@@ -18,9 +18,15 @@
 
     <!-- activity_email_login.xml -->
     <!-- Title of email_login page -->
-    <string name="email_login_recovery_email">Recovery Email</string>
+    <string name="emailLogin_recovery_email">Recovery Email</string>
     <!-- The hint for recovery email input -->
-    <string name="email_login_hint_recovery_email">Enter recovery email</string>
+    <string name="emailLogin_hint_recovery_email">Enter recovery email</string>
     <!-- The reminder for user at email_login page -->
-    <string name="email_login_reminder">Don\'t forget to check your username and change your password after login!</string>
+    <string name="emailLogin_reminder">Don\'t forget to check your username and change your password after login!</string>
+
+    <!-- activity_main.xml -->
+    <!-- -->
+    <string name="main_btnViewAllData">View All Data</string>
+    <!-- -->
+    <string name="main_downloadDatabase">Download Database</string>
 </resources>

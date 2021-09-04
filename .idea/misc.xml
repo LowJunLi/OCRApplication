@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable-anydpi/ic_download.xml" value="0.12777777777777777" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable/login_background.xml" value="0.13240740740740742" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable/rectangle.xml" value="0.1425925925925926" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_email_login.xml" value="0.25416666666666665" />

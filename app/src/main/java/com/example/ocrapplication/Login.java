@@ -99,7 +99,7 @@ public class Login extends AppCompatActivity
      *
      * @param inputUsername  username entered by the user
      * @param inputPassword  password entered by the user
-     * @return true if the username and password is valid, false otherwise
+     * @return               true if the username and password is valid, false otherwise
      */
     public boolean validationPass(String inputUsername, String inputPassword)
     {
@@ -144,7 +144,7 @@ public class Login extends AppCompatActivity
      */
     public boolean checkEmptyField(@NonNull String inputUsername, String inputPassword)
     {
-        return !(inputUsername.equals("") && inputPassword.equals(""));
+        return inputUsername.equals("") && inputPassword.equals("");
     }
 
     /**
