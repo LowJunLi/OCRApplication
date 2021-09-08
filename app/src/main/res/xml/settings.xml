@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="fastLogin"
+        android:defaultValue="false"
+        android:summary="@string/settings_summary_fastLogin"
+        android:title="@string/settings_title_fastLogin" />
+    <ListPreference
+        android:key="language"
+        android:defaultValue="en-US"
+        android:summary="%s"
+        android:title="@string/settings_language"
+        android:entries="@array/languageList"
+        android:entryValues="@array/languageValues"/>
+</PreferenceScreen>

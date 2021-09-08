@@ -25,8 +25,36 @@
     <string name="emailLogin_reminder">Don\'t forget to check your username and change your password after login!</string>
 
     <!-- activity_main.xml -->
-    <!-- -->
+    <!-- The button to let user view all scanned data -->
     <string name="main_btnViewAllData">View All Data</string>
-    <!-- -->
+    <!-- The button to let user download the database -->
     <string name="main_downloadDatabase">Download Database</string>
+    <!-- The button to let user manage their account information -->
+    <string name="main_manageAccount">Manage Account</string>
+
+    <!-- settings.xml -->
+    <!-- The title for the fast login switch preference -->
+    <string name="settings_title_fastLogin">Fast Login</string>
+    <!-- The summary for the fast login switch preference -->
+    <string name="settings_summary_fastLogin">If this option is on, the user will login to the application automatically without entering username or password</string>
+    <!-- The title for the language list preference -->
+    <string name="settings_language">Language</string>
+    <!-- The entries for language list preference -->
+    <string-array name="languageList">
+        <item>English</item>
+        <item>Chinese</item>
+        <item>Malay</item>
+    </string-array>
+    <!-- The entry values for language list preference -->
+    <string-array name="languageValues">
+        <item>en-US</item>
+        <item>zh</item>
+        <item>ms</item>
+    </string-array>
+
+    <!-- menu_settings.xml -->
+    <!-- The title of the setting fragment -->
+    <string name="action_settings">Settings</string>
+
+
 </resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OCRApplication</string>
+    <string name="content_desc_application_logo">Logo Aplikasi</string>
+    <string name="login_title">Buku Log OCR</string>
+    <string name="login_hint_password">Kata Laluan</string>
+    <string name="login_hint_username">Nama Pengguna</string>
+    <string name="login_btnForget">Terlupa Nama Pengguna atau Kata Laluan</string>
+    <string name="login_btnLogin">Log masuk</string>
+    <string name="emailLogin_recovery_email">E-mel Pemulihan</string>
+    <string name="emailLogin_hint_recovery_email">Masukkan e-mel pemulihan</string>
+    <string name="emailLogin_reminder">Jangan lupa untuk menyemak nama pengguna anda!</string>
+    <string name="main_btnViewAllData">Melihat Semua Data</string>
+    <string name="main_downloadDatabase">Muat Turun Pangkalan Data</string>
+    <string name="main_manageAccount">Menguruskan Akaun</string>
+    <string name="settings_title_fastLogin">Log Masuk Pantas</string>
+    <string name="settings_summary_fastLogin">Sekiranya pilihan ini dihidupkan, pengguna akan log masuk ke aplikasi secara automatik tanpa memasukkan nama pengguna atau kata laluan</string>
+    <string name="settings_language">Bahasa</string>
+    <string name="action_settings">Tetapan</string>
+</resources>

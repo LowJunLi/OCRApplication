@@ -2,6 +2,7 @@ package com.example.ocrapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,17 +21,21 @@ public class Login extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        pref = getSharedPreferences("shared_prefs", MODE_PRIVATE);
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
         if (pref == null) //if pref is null, the user use the app for the first time
         {
             setDefaultSharedPreferences();
         }
-        else if (checkFastLogin()) //if fast login is enable, direct user to main page
+
+        setAppLanguage();
+
+        if (checkFastLogin()) //if fast login is enable, direct user to main page
         {
             gotoPage(MainActivity.class);
         }
+
+        setContentView(R.layout.activity_login);
 
         etUsername = findViewById(R.id.login_etUsername);
         etPassword = findViewById(R.id.login_etPassword);
@@ -60,15 +65,32 @@ public class Login extends AppCompatActivity
 
     }
 
+
+    /**
+     * Set language of the application based on value in shared preference
+     *
+     */
+    public void setAppLanguage()
+    {
+        String languageCode =
+                pref.getString("language", "en-US");
+        LanguageManager.setLocale(this, languageCode);
+    }
+
     /**
      * Set default value in shared preferences for user who use the app for the first time.
      */
     public void setDefaultSharedPreferences()
     {
+        //initialize shared preference for language and fastLogin (can edit in settings.xml)
+        androidx.preference.PreferenceManager
+                .setDefaultValues(this, R.xml.settings, false);
+
+        //initialize shared preference for username, password, and recovery email (can edit in manage account)
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("fastLogin", false);
         editor.putString("username", "User");
         editor.putString("password", "Password");
+        editor.putString("recoveryEmail", "defaultEmail@gmail.com");
         editor.apply();
     }
 
