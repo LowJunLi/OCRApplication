@@ -9,7 +9,6 @@
     <string name="login_btnLogin">Log masuk</string>
     <string name="emailLogin_recovery_email">E-mel Pemulihan</string>
     <string name="emailLogin_hint_recovery_email">Masukkan e-mel pemulihan</string>
-    <string name="emailLogin_reminder">Jangan lupa untuk menyemak nama pengguna anda!</string>
     <string name="main_btnViewAllData">Melihat Semua Data</string>
     <string name="main_downloadDatabase">Muat Turun Pangkalan Data</string>
     <string name="main_manageAccount">Menguruskan Akaun</string>
@@ -17,4 +16,23 @@
     <string name="settings_summary_fastLogin">Sekiranya pilihan ini dihidupkan, pengguna akan log masuk ke aplikasi secara automatik tanpa memasukkan nama pengguna atau kata laluan</string>
     <string name="settings_language">Bahasa</string>
     <string name="action_settings">Tetapan</string>
+    <string name="main_hint_btnCamera">Megambil gambar untuk OCR</string>
+    <string name="account_username">Nama Pengguna:</string>
+    <string name="account_recoveryEmail">E-mel Pemulihan:</string>
+    <string name="account_btnChangeProfile">Tukar Nama Pengguna atau E-mel Pemulihan</string>
+    <string name="account_btnChangePassword">Tukar Kata Laluan</string>
+    <string name="dialog_changeUserProfile_title">Tukar Profil Pengguna</string>
+    <string name="emailLogin_reminder">Setelah anda log masuk menggunakan e-mel pemulihan, kata laluan akan diset semula ke kata laluan lalai.<br /><br />Sila periksa nama pengguna anda dan ubah kata laluan anda selepas log masuk.</string>
+    <string name="dialog_changeProfile_hint_username">Masukkan nama pengguna baru</string>
+    <string name="dialog_changeProfile_hint_recovery_email">Masukkan e-mel pemulihan baru</string>
+    <string name="btnUpdateProfile">Kemas kini profil</string>
+    <string name="btnCancel">Batal</string>
+    <string name="dialog_changePassword_title">Tukar Kata Laluan</string>
+    <string name="dialog_changePassword_current_password">Kata Laluan Semasa</string>
+    <string name="dialog_changePassword_hint_current_password">Masukkan kata laluan semasa</string>
+    <string name="dialog_changePassword_new_password">Kata Laluan Baru:</string>
+    <string name="dialog_changePassword_confirm_password">Sahkan Kata Laluan:</string>
+    <string name="dialog_changePassword_re_enter_password">Masukkan semula kata laluan</string>
+    <string name="btnUpdatePassword">Kemas Kini Kata Laluan</string>
+    <string name="dialog_changePassword_hint_new_password">Masukkan kata laluan baru</string>
 </resources>

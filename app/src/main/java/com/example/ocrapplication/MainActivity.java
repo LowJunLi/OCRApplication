@@ -1,23 +1,36 @@
 package com.example.ocrapplication;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
 {
+    Locale currentLocale; //the locale when the activity is created
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        currentLocale = getResources().getConfiguration().locale;
+
+        Button btnViewAllData = findViewById(R.id.main_btnViewAllData);
+        //Button btnDownload = findViewById(R.id.main_btnDownload);
+        Button btnManageAccount = findViewById(R.id.main_btnManageAccount);
+        FloatingActionButton btnCamera = findViewById(R.id.main_btnCamera);
+
+        btnViewAllData.setOnClickListener(v -> gotoPage(DatabaseRecords.class));
+        btnManageAccount.setOnClickListener(v -> gotoPage(ManageAccount.class));
+        btnCamera.setOnClickListener(v -> gotoPage(UseCamera.class));
     }
 
     @Override
@@ -47,10 +60,30 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Direct user to another page.
+     *
+     * @param className class of any type
+     */
+    public void gotoPage(Class<?> className)
+    {
+        Intent intent = new Intent(this, className);
+        startActivity(intent);
+    }
+
+    /**
+    *  If the locale currently displaying (the currentLocale variable) is different from locale in
+     *  the configuration, recreate the page to display new locale
+     */
     @Override
     public void onResume()
     {
-        LanguageManager.recreateIfLocaleChanged(this);
+        Locale oldLocale = currentLocale;
+        currentLocale = getResources().getConfiguration().locale;
+        if(currentLocale != oldLocale)
+        {
+            recreate();
+        }
         super.onResume();
     }
 

@@ -35,9 +35,9 @@ public class LanguageManager
             // refer to https://stackoverflow.com/questions/4985805/set-locale-programmatically
             Locale locale = new Locale(languageCode);
             Locale.setDefault(locale);
-            Configuration config = fragment.getActivity().getBaseContext().getResources().getConfiguration();
+            Configuration config = fragment.getActivity().getResources().getConfiguration();
             config.setLocale(locale);
-            fragment.getActivity().getBaseContext().getResources().updateConfiguration(config,
+            fragment.getActivity().getResources().updateConfiguration(config,
                     fragment.getActivity().getBaseContext().getResources().getDisplayMetrics());
         }
     }
@@ -52,27 +52,9 @@ public class LanguageManager
     {
         Locale locale = new Locale(languageCode);
         Locale.setDefault(locale);
-        Configuration config = activity.getBaseContext().getResources().getConfiguration();
+        Configuration config = activity.getResources().getConfiguration();
         config.setLocale(locale);
-        activity.getBaseContext().getResources().updateConfiguration(config,
+        activity.getResources().updateConfiguration(config,
                 activity.getBaseContext().getResources().getDisplayMetrics());
-    }
-
-    /**
-     * If the locale has changed, recreate the activity to reflect locale changed
-     *
-     * @param activity  the activity that may need to be recreate to reflect locale changed
-     */
-    public static void recreateIfLocaleChanged(Activity activity)
-    {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(activity);
-        String settingLocale = pref.getString("language", "en-US");
-        Locale currentLocale = activity.getResources().getConfiguration().locale;
-        if(!settingLocale.equals(currentLocale)) //locale changed
-        {
-            activity.finish();
-            activity.recreate();
-        }
-
     }
 }

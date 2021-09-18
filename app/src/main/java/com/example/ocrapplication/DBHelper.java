@@ -43,6 +43,13 @@ public class DBHelper extends SQLiteOpenHelper
                 ");";
         //Executing the string to create table
         db.execSQL(sql);
+
+        initializeData();
+    }
+
+    public void initializeData()
+    {
+
     }
 
     @Override

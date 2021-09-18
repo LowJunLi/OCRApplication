@@ -11,8 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 public class Login extends AppCompatActivity
 {
+    Locale currentLocale;
     EditText etUsername;
     EditText etPassword;
     SharedPreferences pref; //use to retrieve fastLogin. username and password set by the user
@@ -29,6 +32,8 @@ public class Login extends AppCompatActivity
         }
 
         setAppLanguage();
+        currentLocale = getResources().getConfiguration().locale; //store current locale (to detect
+        // locale change)
 
         if (checkFastLogin()) //if fast login is enable, direct user to main page
         {
@@ -177,6 +182,22 @@ public class Login extends AppCompatActivity
     public void displayToast(String message)
     {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     *  If the locale currently displaying (the currentLocale variable) is different from locale in
+     *  the configuration, recreate the page to display new locale
+     */
+    @Override
+    public void onResume()
+    {
+        Locale oldLocale = currentLocale;
+        currentLocale = getResources().getConfiguration().locale;
+        if(currentLocale != oldLocale)
+        {
+            recreate();
+        }
+        super.onResume();
     }
 
 

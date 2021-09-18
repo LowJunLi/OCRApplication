@@ -11,6 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OCRApplication">
         <activity
+            android:name=".UseCamera"
+            android:exported="true" />
+        <activity
+            android:name=".ManageAccount"
+            android:exported="true" />
+        <activity
+            android:name=".DatabaseRecords"
+            android:exported="true" />
+        <activity
             android:name=".SettingsActivity"
             android:exported="true" />
         <activity
