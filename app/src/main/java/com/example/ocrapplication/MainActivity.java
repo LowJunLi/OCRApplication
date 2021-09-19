@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -14,7 +15,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
 {
-    Locale currentLocale; //the locale when the activity is created
+    private long pressedTime = 0;
+    private Locale currentLocale; //the locale when the activity is created
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -85,6 +87,42 @@ public class MainActivity extends AppCompatActivity
             recreate();
         }
         super.onResume();
+    }
+
+    /**
+     * Exit application when the user click back button twice consecutively
+     *
+     * When user click the back button for the first time, a toast message will appear to tell user
+     * if he click the back button again he will exit the application
+     * If the user click next button again within 2 seconds, the user will exit the application
+     *
+     * @see <a href="https://www.geeksforgeeks.org/how-to-implement-press-back-again-to-exit-in-
+     * android/" How to Implement Press Back Again to Exit in Android?</a>
+     */
+    @Override
+    public void onBackPressed()
+    {
+        final long waitTime = 2000; //2 seconds
+
+        if (pressedTime + waitTime > System.currentTimeMillis())
+        {
+            super.onBackPressed();
+            //since the login page has called finish(), this is the only activity, calling finish()
+            // will close the app
+            finish();
+            //Kill all existing app process
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+
+            //close the app
+            System.exit(0);
+        }
+        else
+        {
+            Toast.makeText(this, getString(R.string.java_message_press_again_to_exit),
+                    Toast.LENGTH_SHORT).show();
+        }
+        pressedTime = System.currentTimeMillis();
     }
 
 

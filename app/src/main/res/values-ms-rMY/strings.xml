@@ -17,12 +17,12 @@
     <string name="settings_language">Bahasa</string>
     <string name="action_settings">Tetapan</string>
     <string name="main_hint_btnCamera">Megambil gambar untuk OCR</string>
-    <string name="account_username">Nama Pengguna:</string>
-    <string name="account_recoveryEmail">E-mel Pemulihan:</string>
+    <string name="account_username_param">Nama Pengguna: %s</string>
+    <string name="account_recoveryEmail_param">E-mel Pemulihan: %s</string>
     <string name="account_btnChangeProfile">Tukar Nama Pengguna atau E-mel Pemulihan</string>
     <string name="account_btnChangePassword">Tukar Kata Laluan</string>
-    <string name="dialog_changeUserProfile_title">Tukar Profil Pengguna</string>
-    <string name="emailLogin_reminder">Setelah anda log masuk menggunakan e-mel pemulihan, kata laluan akan diset semula ke kata laluan lalai.<br /><br />Sila periksa nama pengguna anda dan ubah kata laluan anda selepas log masuk.</string>
+    <string name="dialog_changeProfile_title">Tukar Profil Pengguna</string>
+    <string name="emailLogin_reminder">Setelah anda log masuk menggunakan e-mel pemulihan, kata laluan akan diset semula ke kata laluan lalai.<br />Sila periksa nama pengguna anda dan ubah kata laluan anda selepas log masuk.</string>
     <string name="dialog_changeProfile_hint_username">Masukkan nama pengguna baru</string>
     <string name="dialog_changeProfile_hint_recovery_email">Masukkan e-mel pemulihan baru</string>
     <string name="btnUpdateProfile">Kemas kini profil</string>
@@ -32,7 +32,18 @@
     <string name="dialog_changePassword_hint_current_password">Masukkan kata laluan semasa</string>
     <string name="dialog_changePassword_new_password">Kata Laluan Baru:</string>
     <string name="dialog_changePassword_confirm_password">Sahkan Kata Laluan:</string>
-    <string name="dialog_changePassword_re_enter_password">Masukkan semula kata laluan</string>
+    <string name="dialog_changePassword_hint_confirm_password">Masukkan semula kata laluan</string>
     <string name="btnUpdatePassword">Kemas Kini Kata Laluan</string>
     <string name="dialog_changePassword_hint_new_password">Masukkan kata laluan baru</string>
+    <string name="dialog_changeProfile_username">Nama Pengguna:</string>
+    <string name="dialog_changeProfile_recovery_email">E-mel Pemulihan:</string>
+    <string name="java_error_empty_username">Nama pengguna tidak boleh kosong</string>
+    <string name="java_error_empty_new_password">Kata laluan baru tidak boleh kosong</string>
+    <string name="java_error_wrong_current_password">Kata laluan semasa salah</string>
+    <string name="java_error_different_confirm_password">Kata laluan pengesahan berbeza dengan kata laluan baru</string>
+    <string name="java_message_enter_username_password">Sila masukkan nama pengguna dan kata laluan</string>
+    <string name="java_error_invalid_username_password">Gabungan nama pengguna dan kata laluan tidak sah!</string>
+    <string name="java_error_invalid_email">Sila masukkan alamat emel yang sah</string>
+    <string name="java_error_empty_recovery_email">Sila masukkan e-mel pemulihan</string>
+    <string name="java_message_press_again_to_exit">Tekan kembali sekali lagi untuk menutup aplikasi</string>
 </resources>

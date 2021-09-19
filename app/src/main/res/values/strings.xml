@@ -14,6 +14,7 @@
     <!-- The label for btnForget in login page -->
     <string name="login_btnForget">Forget Username or Password</string>
     <!-- The label for btnLogin in login page -->
+    <!-- Also used for login button at email_login -->
     <string name="login_btnLogin">Login</string>
 
     <!-- activity_email_login.xml -->
@@ -22,7 +23,7 @@
     <!-- The hint for recovery email input -->
     <string name="emailLogin_hint_recovery_email">Enter recovery email</string>
     <!-- The reminder for user at email_login page -->
-    <string name="emailLogin_reminder">After you login using recovery email, the password will be reset to default password.<br/><br/>Please check your username and change your password after login.</string>
+    <string name="emailLogin_reminder">After you login using recovery email, the password will be reset to default password.<br/>Please check your username and change your password after login.</string>
 
     <!-- activity_main.xml -->
     <!-- The button to let user view all scanned data -->
@@ -59,46 +60,69 @@
     <string name="action_settings">Settings</string>
 
     <!-- activity_manage_account -->
-    <!-- The text to indicate the text field is about username -->
-    <!-- Also used in dialog_change_profile -->
-    <string name="account_username">Username:</string>
-    <!-- The text to indicate the text field is about username-->
-    <!-- Also used in dialog_change_profile -->
-    <string name="account_recoveryEmail">Recovery Email:</string>
-    <!-- -->
+    <!-- Display username stored in the application -->
+    <string name="account_username_param">Username: %s</string>
+    <!-- Display recovery email stored in the application -->
+    <string name="account_recoveryEmail_param">Recovery Email: %s</string>
+    <!-- The button to show fragment for changing username or recovery email -->
     <string name="account_btnChangeProfile">Change Username Or Recovery Email</string>
-    <!-- -->
+    <!-- The button to show fragment for changing password -->
     <string name="account_btnChangePassword">Change Password</string>
 
 
     <!-- dialog_change_profile.xml -->
-    <!-- -->
-    <string name="dialog_changeUserProfile_title">Change User Profile</string>
-    <!-- -->
+    <!-- The title for the change profile fragment -->
+    <string name="dialog_changeProfile_title">Change User Profile</string>
+    <!-- The label for username input -->
+    <string name="dialog_changeProfile_username">Username:</string>
+    <!-- The hint for username input -->
     <string name="dialog_changeProfile_hint_username">Enter new username</string>
-    <!-- -->
+    <!-- The label for recovery email input -->
+    <string name="dialog_changeProfile_recovery_email">Recovery Email:</string>
+    <!-- The hint for recovery email input -->
     <string name="dialog_changeProfile_hint_recovery_email">Enter new recovery email</string>
-    <!-- -->
+    <!-- The button to update the profile -->
     <string name="btnUpdateProfile">Update Profile</string>
+    <!-- The button to cancel an operation (in this file is to close fragment) -->
     <!-- Also used in dialog_change_password.xml -->
     <string name="btnCancel">Cancel</string>
 
 
     <!-- dialog_change_password.xml-->
-    <!-- -->
+    <!-- The title for the change password fragment -->
     <string name="dialog_changePassword_title">Change Password</string>
-    <!-- -->
+    <!-- The label for current password input -->
     <string name="dialog_changePassword_current_password">Current Password:</string>
-    <!-- -->
+    <!-- The hint for current password input -->
     <string name="dialog_changePassword_hint_current_password">Enter current password</string>
-    <!-- -->
+    <!-- The label for new password input -->
     <string name="dialog_changePassword_new_password">New Password:</string>
-    <!-- -->
+    <!-- The label for confirm password input -->
     <string name="dialog_changePassword_confirm_password">Confirm Password:</string>
-    <!-- -->
-    <string name="dialog_changePassword_re_enter_password">Reenter new password</string>
-    <!-- -->
+    <!-- The hint for confirm password input -->
+    <string name="dialog_changePassword_hint_confirm_password">Reenter new password</string>
+    <!-- The button to update the password -->
     <string name="btnUpdatePassword">Update Password</string>
-    <!-- -->
+    <!-- The hint for new password input -->
     <string name="dialog_changePassword_hint_new_password">Enter new password</string>
+
+    <!-- The message in Java file -->
+    <!-- Error message when user not enter username -->
+    <string name="java_error_empty_username">Username can\'t be empty</string>
+    <!-- Error message when user not enter recovery email -->
+    <string name="java_error_empty_recovery_email">Please enter recovery email</string>
+    <!-- Error message when user enter an invalid email address (not pass the regex) -->
+    <string name="java_error_invalid_email">Please enter a valid email address</string>
+    <!-- Error message when user enter wrong current password -->
+    <string name="java_error_wrong_current_password">The current password is wrong</string>
+    <!-- Error message when user not enter the new password -->
+    <string name="java_error_empty_new_password">The new password cannot be empty</string>
+    <!-- Error message when user enter confirmation password which do not match with the new password -->
+    <string name="java_error_different_confirm_password">The confirm password is different from new password</string>
+    <!-- Message to tell the user to enter username and password -->
+    <string name="java_message_enter_username_password">Please enter username and password</string>
+    <!-- Error message when the user enter wrong username or password -->
+    <string name="java_error_invalid_username_password">Invalid username and password!</string>
+    <!-- Message to tell user the app will close if the user click back button again -->
+    <string name="java_message_press_again_to_exit">Press back again to exit</string>
 </resources>

@@ -33,6 +33,16 @@
         app:layout_constraintTop_toBottomOf="@+id/emailLogin_txtRecoveryEmail"
         tools:ignore="TextContrastCheck" />
 
+    <Button
+        android:id="@+id/emailLogin_btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/login_btnLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailLogin_etRecoveryEmail" />
+
     <TextView
         android:id="@+id/emailLogin_txtReminder"
         android:layout_width="0dp"
@@ -46,5 +56,5 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailLogin_etRecoveryEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/emailLogin_btnLogin" />
 </androidx.constraintlayout.widget.ConstraintLayout>

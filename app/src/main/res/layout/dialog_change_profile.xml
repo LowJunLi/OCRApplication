@@ -17,7 +17,7 @@
         android:background="@color/dark_blue"
         android:gravity="center"
         android:padding="8dp"
-        android:text="@string/dialog_changeUserProfile_title"
+        android:text="@string/dialog_changeProfile_title"
         android:textColor="@color/white"
         android:textColorHighlight="@color/white"
         android:textSize="30sp" />
@@ -26,7 +26,7 @@
         android:id="@+id/dialog_changeProfile_txtUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/account_username"
+        android:text="@string/dialog_changeProfile_username"
         android:textColor="@color/light_blue"
         android:textSize="20sp" />
 
@@ -45,7 +45,7 @@
         android:id="@+id/dialog_changeProfile_txtRecoveryEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/account_recoveryEmail"
+        android:text="@string/dialog_changeProfile_recovery_email"
         android:textColor="@color/light_blue"
         android:textSize="20sp" />
 

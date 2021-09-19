@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class ManageAccount extends AppCompatActivity
 {
@@ -23,11 +24,24 @@ public class ManageAccount extends AppCompatActivity
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
 
+        setDisplayUsernameAndRecoveryEmail();
+
         Button btnChangeProfile = findViewById(R.id.account_btnChangeProfile);
         Button btnChangePassword = findViewById(R.id.account_btnChangePassword);
 
         btnChangeProfile.setOnClickListener(v -> changeProfile());
         btnChangePassword.setOnClickListener(v -> changePassword());
+    }
+
+    public void setDisplayUsernameAndRecoveryEmail()
+    {
+        TextView txtUsername = findViewById(R.id.account_txtUsername);
+        TextView txtRecoveryEmail = findViewById(R.id.account_txtRecoveryEmail);
+        String currentUsername = pref.getString("username", "User");
+        String currentRecoveryEmail = pref.getString("recoveryEmail", "defaultEmail@gmail.com");
+
+        txtUsername.setText(getString(R.string.account_username_param, currentUsername));
+        txtRecoveryEmail.setText(getString(R.string.account_recoveryEmail_param, currentRecoveryEmail));
     }
 
     /**
@@ -54,25 +68,25 @@ public class ManageAccount extends AppCompatActivity
         view.findViewById(R.id.dialog_changeProfile_btnUpdateProfile).setOnClickListener(view1 ->
                 {
                     String username = etUsername.getText().toString().trim();
-                    String recoveryEmail = etUsername.getText().toString().trim();
+                    String recoveryEmail = etRecoveryEmail.getText().toString().trim();
                     boolean validationPass = true; //if validation fail, this variable will set to false
 
-                    if(!username.isEmpty())
+                    if(username.isEmpty())
                     {
-                        etUsername.setError("Username can't be empty");
+                        etUsername.setError(getString(R.string.java_error_empty_username));
                         etUsername.requestFocus();
                         validationPass = false;
                     }
 
-                    if(!recoveryEmail.isEmpty())
+                    if(recoveryEmail.isEmpty())
                     {
-                        etRecoveryEmail.setError("Please enter recovery email");
+                        etRecoveryEmail.setError(getString(R.string.java_error_empty_recovery_email));
                         etRecoveryEmail.requestFocus();
                         validationPass = false;
                     }
-                    else if(verifyEmail(recoveryEmail))
+                    else if(!verifyEmail(recoveryEmail))
                     {
-                        etRecoveryEmail.setError("Please enter a valid email address");
+                        etRecoveryEmail.setError(getString(R.string.java_error_invalid_email));
                         etRecoveryEmail.requestFocus();
                         validationPass = false;
                     }
@@ -116,20 +130,20 @@ public class ManageAccount extends AppCompatActivity
                     String correctPassword = pref.getString("password", "Password");
                     if(!currentPassword.equals(correctPassword))
                     {
-                        etCurrentPassword.setError("The current password is wrong");
+                        etCurrentPassword.setError(getString(R.string.java_error_wrong_current_password));
                         etCurrentPassword.requestFocus();
                         validationPass = false;
                     }
 
                     if(newPassword.isEmpty())
                     {
-                        etNewPassword.setError("The new password cannot be empty");
+                        etNewPassword.setError(getString(R.string.java_error_empty_new_password));
                         etNewPassword.requestFocus();
                         validationPass = false;
                     }
                     else if(!newPassword.equals(confirmPassword))
                     {
-                        etConfirmPassword.setError("The confirm password is different from new password");
+                        etConfirmPassword.setError(getString(R.string.java_error_different_confirm_password));
                         etConfirmPassword.requestFocus();
                         validationPass = false;
                     }
@@ -137,6 +151,7 @@ public class ManageAccount extends AppCompatActivity
                     if(validationPass)
                     {
                         savePassword(newPassword);
+                        setDisplayUsernameAndRecoveryEmail();
                         alertDialog.dismiss();
                     }
 

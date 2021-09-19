@@ -11,14 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Locale;
-
 public class Login extends AppCompatActivity
 {
-    Locale currentLocale;
-    EditText etUsername;
-    EditText etPassword;
-    SharedPreferences pref; //use to retrieve fastLogin. username and password set by the user
+    private EditText etUsername;
+    private EditText etPassword;
+    private SharedPreferences pref; //use to retrieve fastLogin. username and password set by the user
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,12 +29,10 @@ public class Login extends AppCompatActivity
         }
 
         setAppLanguage();
-        currentLocale = getResources().getConfiguration().locale; //store current locale (to detect
-        // locale change)
 
         if (checkFastLogin()) //if fast login is enable, direct user to main page
         {
-            gotoPage(MainActivity.class);
+            gotoPage(MainActivity.class, true);
         }
 
         setContentView(R.layout.activity_login);
@@ -53,20 +48,20 @@ public class Login extends AppCompatActivity
 
             if(checkEmptyField(inputUsername, inputPassword))
             {
-                displayToast("Please enter username and password");
+                displayToast(getString(R.string.java_message_enter_username_password));
             }
             else if (validationPass(inputUsername, inputPassword))
             {
-                gotoPage(MainActivity.class);
+                gotoPage(MainActivity.class, true);
             }
             else //validation fail
             {
-                displayToast("Invalid username and password!");
+                displayToast(getString(R.string.java_error_invalid_username_password));
             }
         });
 
         Button btnForget = findViewById(R.id.login_btnForget);
-        btnForget.setOnClickListener(v -> gotoPage(EmailLogin.class));
+        btnForget.setOnClickListener(v -> gotoPage(EmailLogin.class, false));
 
     }
 
@@ -113,11 +108,16 @@ public class Login extends AppCompatActivity
     /**
      * Direct user to another page.
      *
-     * @param className class of any type
+     * @param className         class of any type
+     * @param activityClearTop  clear activity on top of the stack
      */
-    public void gotoPage(Class<?> className)
+    public void gotoPage(Class<?> className, boolean activityClearTop)
     {
         Intent intent = new Intent(this, className);
+        if(activityClearTop)
+        {
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
         startActivity(intent);
     }
 
@@ -184,21 +184,6 @@ public class Login extends AppCompatActivity
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     *  If the locale currently displaying (the currentLocale variable) is different from locale in
-     *  the configuration, recreate the page to display new locale
-     */
-    @Override
-    public void onResume()
-    {
-        Locale oldLocale = currentLocale;
-        currentLocale = getResources().getConfiguration().locale;
-        if(currentLocale != oldLocale)
-        {
-            recreate();
-        }
-        super.onResume();
-    }
 
 
 }
