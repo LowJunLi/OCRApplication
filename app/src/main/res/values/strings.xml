@@ -125,4 +125,12 @@
     <string name="java_error_invalid_username_password">Invalid username and password!</string>
     <!-- Message to tell user the app will close if the user click back button again -->
     <string name="java_message_press_again_to_exit">Press back again to exit</string>
+
+    <!-- activity_ocr_result.xml -->
+    <string name="result_rescan">Rescan</string>
+    <string name="result_processing">Processing...</string>
+    <string name="java_error_no_camera_app">No app in your phone can take picture</string>
+    <string name="result_desc_imgPhoto">Photo taken by the user</string>
+    <string name="java_message_ocr_completion">OCR Result</string>
+    <string name="java_message_please_take_picture">Please take a picture</string>
 </resources>

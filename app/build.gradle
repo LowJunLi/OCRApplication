@@ -73,4 +73,7 @@ dependencies {
     //roboelectric
     testImplementation 'org.robolectric:robolectric:4.4'
 
+    //OCR
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:17.0.0'
+
 }
