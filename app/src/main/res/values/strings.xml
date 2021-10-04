@@ -45,13 +45,11 @@
     <!-- The entries for language list preference -->
     <string-array name="languageList">
         <item>English</item>
-        <item>Chinese</item>
         <item>Malay</item>
     </string-array>
     <!-- The entry values for language list preference -->
     <string-array name="languageValues">
         <item>en-US</item>
-        <item>zh</item>
         <item>ms</item>
     </string-array>
 
@@ -131,6 +129,11 @@
     <string name="result_processing">Processing...</string>
     <string name="java_error_no_camera_app">No app in your phone can take picture</string>
     <string name="result_desc_imgPhoto">Photo taken by the user</string>
-    <string name="java_message_ocr_completion">OCR Result</string>
+    <string name="java_message_ocr_completion">OCR Completed</string>
     <string name="java_message_please_take_picture">Please take a picture</string>
+    <string name="java_error_no_ocr_result">No result detected by OCR, please rescan</string>
+    <string name="java_error_ocr_fail">OCR fail to be execute</string>
+    <string name="java_message_ocr_no_text_detected">No text is detected</string>
+    <string name="java_message_ocr_text_detected">OCR Result</string>
+    <string name="java_error_fail_create_photo_file">Fail to create photo file</string>
 </resources>

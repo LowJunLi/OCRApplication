@@ -2,12 +2,8 @@ package com.example.ocrapplication;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,18 +14,28 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.text.Text;
+import com.google.mlkit.vision.text.TextRecognition;
+import com.google.mlkit.vision.text.TextRecognizer;
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-public class OcrResult extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<LogbookRow>>
+public class OcrResult extends AppCompatActivity
 {
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private String currentPhotoPath;
@@ -49,7 +55,6 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
             if (result.getResultCode() == Activity.RESULT_OK)
             {
                 Bitmap photo = BitmapFactory.decodeFile(currentPhotoPath); //get picture from the directory
-                deletePhoto();
                 imgPhoto.setImageBitmap(photo);
                 performOCR(photo);
             }
@@ -62,9 +67,9 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
     }
 
     /**
-     *  Use application camera to take picture
+     * Use application camera to take picture
      *
-     *  @see <a href="https://developer.android.com/training/camera/photobasics" Take photos</a>
+     * @see <a href="https://developer.android.com/training/camera/photobasics" Take photos</a>
      */
     private void takePicture()
     {
@@ -80,7 +85,7 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
             }
             catch (IOException ex)
             {
-                displayToast("Fail to create photo file");
+                displayToast(getString(R.string.java_error_fail_create_photo_file));
             }
             // Continue only if the File was successfully created
             if (imageFile != null)
@@ -115,18 +120,6 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
     }
 
     /**
-     *  Delete the photo in the directory
-     */
-    public void deletePhoto()
-    {
-        File fdelete = new File(currentPhotoPath);
-        if (fdelete.exists())
-        {
-            fdelete.delete();
-        }
-    }
-
-    /**
      * Display toast message
      *
      * @param message the message to be displayed
@@ -138,42 +131,112 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
 
     /**
      * Perform OCR on the picture
-     *
-     * @param photo the picture taken by the user
      */
     public void performOCR(Bitmap photo)
     {
-        if(photo != null)
+        InputImage image = InputImage.fromBitmap(photo, 0);
+        TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
+
+        recognizer.process(image).addOnSuccessListener(visionText ->
         {
-            Bundle photoBundle = new Bundle();
-            photoBundle.putParcelable("photo", photo);
-            LoaderManager.getInstance(this).restartLoader(0, photoBundle, this);
-            txtStatus.setText(R.string.result_processing);
+            txtStatus.setText(R.string.java_message_ocr_completion);
+            processTextRecognitionResult(visionText);
+        }).addOnFailureListener(e -> txtStatus.setText(R.string.java_error_ocr_fail));
+    }
+
+    /**
+     * Process the OCR result
+     *
+     * @param visionText result returned from successful OCR recognition of mlkit
+     */
+    public void processTextRecognitionResult(Text visionText)
+    {
+        ArrayList<String> blocks = new ArrayList<String>();
+        for (Text.TextBlock block: visionText.getTextBlocks())
+        {
+            blocks.add(block.getText());
+        }
+
+        if (blocks.size() == 0)
+        {
+            txtStatus.append(getString(R.string.java_message_ocr_no_text_detected));
         }
         else
         {
-            txtStatus.setText(R.string.java_message_please_take_picture);
+            txtStatus.append(getString(R.string.java_message_ocr_text_detected));
+            displayEditableTable(blocks);
+        }
+    }
+
+    /**
+     *  Display an editable table to let user edit the result of OCR recognition
+     *
+     * @param data all the text recognized by OCR
+     */
+    public void displayEditableTable(List<String> data)
+    {
+        TableLayout table = findViewById(R.id.result_tableLayout);
+        table.removeAllViews();
+
+        final int colNum = 6;
+        int remainderCol = colNum - (data.size() % colNum);
+
+        //add empty string to the arraylist to ensure the size of list is multiple of colNum
+        for(int i = 0; i < remainderCol; i++)
+        {
+            data.add("");
         }
 
-    }
+        TableRow header = new TableRow(this);
 
-    @NonNull
-    @Override
-    public Loader<ArrayList<LogbookRow>> onCreateLoader(int id, @Nullable Bundle args)
-    {
-        Bitmap photo = args.getParcelable("photo");
-        return new OcrLoader(this, photo);
-    }
+        TextView tvDate = new TextView(this);
+        tvDate.setText("Date");
+        TextView tvTime = new TextView(this);
+        tvTime.setText("Time");
+        TextView tvName = new TextView(this);
+        tvName.setText("Name");
+        TextView tvTemperature = new TextView(this);
+        tvTemperature.setText("Temperature");
+        TextView tvPhone = new TextView(this);
+        tvPhone.setText("Phone");
+        TextView tvRemark = new TextView(this);
+        tvRemark.setText("Remark");
 
-    @Override
-    public void onLoadFinished(@NonNull Loader<ArrayList<LogbookRow>> loader, ArrayList<LogbookRow> data)
-    {
-        txtStatus.setText(R.string.java_message_ocr_completion);
-    }
+        header.addView(tvDate);
+        header.addView(tvTime);
+        header.addView(tvName);
+        header.addView(tvTemperature);
+        header.addView(tvPhone);
+        header.addView(tvRemark);
 
-    @Override
-    public void onLoaderReset(@NonNull Loader<ArrayList<LogbookRow>> loader)
-    {
+        table.addView(header);
 
+
+        for (int i = 0; i < data.size();)
+        {
+            TableRow row = new TableRow(this);
+
+            EditText etDate = new EditText(this);
+            etDate.setText(data.get(i++));
+            EditText etTime = new EditText(this);
+            etTime.setText(data.get(i++));
+            EditText etName = new EditText(this);
+            etName.setText(data.get(i++));
+            EditText etTemperature = new EditText(this);
+            etTemperature.setText(data.get(i++));
+            EditText etPhone = new EditText(this);
+            etPhone.setText(data.get(i++));
+            EditText etRemark = new EditText(this);
+            etRemark.setText(data.get(i++));
+
+            row.addView(etDate);
+            row.addView(etTime);
+            row.addView(etName);
+            row.addView(etTemperature);
+            row.addView(etPhone);
+            row.addView(etRemark);
+
+            table.addView(row);
+        }
     }
 }

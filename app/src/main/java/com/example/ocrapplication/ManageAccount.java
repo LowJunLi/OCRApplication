@@ -94,12 +94,10 @@ public class ManageAccount extends AppCompatActivity
                     if(validationPass)
                     {
                         saveProfile(username, recoveryEmail);
+                        setDisplayUsernameAndRecoveryEmail();
                         alertDialog.dismiss();
                     }
-
                 });
-
-
     }
 
     /**
@@ -147,14 +145,11 @@ public class ManageAccount extends AppCompatActivity
                         etConfirmPassword.requestFocus();
                         validationPass = false;
                     }
-
                     if(validationPass)
                     {
                         savePassword(newPassword);
-                        setDisplayUsernameAndRecoveryEmail();
                         alertDialog.dismiss();
                     }
-
                 });
     }
 

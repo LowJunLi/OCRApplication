@@ -13,8 +13,8 @@ import androidx.preference.PreferenceManager;
 import java.util.Locale;
 
 //this is a class that contains only static member and function to help in managing application locale,
-//this class should not be instantiate
-public class LanguageManager
+//this class should not be instantiate or inherited
+public final class LanguageManager
 {
 
     private LanguageManager() //private constructor to avoid instantiation

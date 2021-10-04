@@ -55,8 +55,7 @@ public class MainActivity extends AppCompatActivity
         //if the user click the "Settings" button
         if (id == R.id.action_settings)
         {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            gotoPage(SettingsActivity.class);
             return true;
         }
 
@@ -108,8 +107,6 @@ public class MainActivity extends AppCompatActivity
         if (pressedTime + waitTime > System.currentTimeMillis())
         {
             super.onBackPressed();
-            //since the login page has called finish(), this is the only activity, calling finish()
-            // will close the app
             finish();
             //Kill all existing app process
             moveTaskToBack(true);
