@@ -49,7 +49,13 @@ public class DBHelper extends SQLiteOpenHelper
 
     public void initializeData()
     {
-
+        insertRecord(1634035305, "Shin Wei Siong", 37.4, "0145623870", "-");
+        insertRecord(1634035305, "Low Jun Yi", 36.1, "0145613880", "none");
+        insertRecord(1634120964, "Low Jun Li", 36.5, "01110955400", "none");
+        insertRecord( 1634121688, "Bock Chuang Zher", 36.2, "0123456789", "");
+        insertRecord(1634121705, "Low Jun Li", 37, "0123456798", "No comment");
+        insertRecord(1634208105, "Shin Wei Siong", 36.9, "0145623870", "No comment");
+        insertRecord(1634208105, "Chew Xun", 37, "0123456666", "-");
     }
 
     @Override
@@ -70,7 +76,7 @@ public class DBHelper extends SQLiteOpenHelper
     * @param remark         the remark written by the person
     * @return               true if the insertion is successful, otherwise false
      */
-    boolean insertRecord(String enterDateTime, String name, double temperature, String phone, String remark)
+    boolean insertRecord(long enterDateTime, String name, double temperature, String phone, String remark)
     {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_ENTERDATETIME, enterDateTime);
@@ -93,7 +99,7 @@ public class DBHelper extends SQLiteOpenHelper
      * @param remark         the updated remark
      * @return               true if the one record is updated (update successful), otherwise false
      */
-    boolean updateRecord(int id, String enterDateTime, String name, double temperature, String phone, String remark)
+    boolean updateRecord(int id, long enterDateTime, String name, double temperature, String phone, String remark)
     {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();

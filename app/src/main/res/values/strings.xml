@@ -23,7 +23,7 @@
     <!-- The hint for recovery email input -->
     <string name="emailLogin_hint_recovery_email">Enter recovery email</string>
     <!-- The reminder for user at email_login page -->
-    <string name="emailLogin_reminder">After you login using recovery email, the password will be reset to default password.<br/>Please check your username and change your password after login.</string>
+    <string name="emailLogin_reminder">After you login using recovery email, the password will be reset to default password.<br />Please check your username and change your password after login.</string>
 
     <!-- activity_main.xml -->
     <!-- The button to let user view all scanned data -->
@@ -123,17 +123,37 @@
     <string name="java_error_invalid_username_password">Invalid username and password!</string>
     <!-- Message to tell user the app will close if the user click back button again -->
     <string name="java_message_press_again_to_exit">Press back again to exit</string>
-
-    <!-- activity_ocr_result.xml -->
-    <string name="result_rescan">Rescan</string>
-    <string name="result_processing">Processing...</string>
     <string name="java_error_no_camera_app">No app in your phone can take picture</string>
-    <string name="result_desc_imgPhoto">Photo taken by the user</string>
     <string name="java_message_ocr_completion">OCR Completed</string>
     <string name="java_message_please_take_picture">Please take a picture</string>
-    <string name="java_error_no_ocr_result">No result detected by OCR, please rescan</string>
+    <string name="java_error_no_ocr_result">No text detected by OCR, please rescan</string>
     <string name="java_error_ocr_fail">OCR fail to be execute</string>
     <string name="java_message_ocr_no_text_detected">No text is detected</string>
     <string name="java_message_ocr_text_detected">OCR Result</string>
     <string name="java_error_fail_create_photo_file">Fail to create photo file</string>
+    <string name="java_table_header_date">Date</string>
+    <string name="java_table_header_time">Time</string>
+    <string name="java_table_header_name">Name</string>
+    <string name="java_table_header_temperature">Temperature</string>
+    <string name="java_table_header_phone">Phone Number</string>
+    <string name="java_table_header_remark">Remark</string>
+    <string name="java_error_invalid_temperature">Invalid temperature range, the temperature must be between 35.0 and 42.0</string>
+    <string name="java_error_non_numeric_input">The input must be a number</string>
+    <string name="java_error_unable_to_save">Unable to save data because there is invalid data</string>
+    <string name="java_error_invalid_date">Invalid date format, please follow date format dd-MM-YYYY</string>
+    <string name="java_error_invalid_time">Invalid time format, please follow time format HH:mm</string>
+
+
+    <!-- activity_ocr_result.xml -->
+    <string name="result_rescan">Rescan</string>
+    <string name="result_processing">Processing…</string>
+    <string name="result_desc_imgPhoto">Photo taken by the user</string>
+    <string name="result_btnAddRow">Add row</string>
+
+    <!-- activity_import_export_database.xml -->
+    <string name="importExport_btnExport">Export</string>
+    <string name="importExport_btnImport">Import</string>
+    <string name="importExport_label_export">Export the database file to SD card</string>
+    <string name="importExport_label_import">Import the database file. The current database file will be deleted and replaced by new database file.</string>
+
 </resources>

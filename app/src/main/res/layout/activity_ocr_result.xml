@@ -30,18 +30,6 @@
                 tools:ignore="ImageContrastCheck"
                 tools:srcCompat="@tools:sample/avatars" />
 
-            <TableLayout
-                android:id="@+id/result_tableLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:scrollbars="horizontal|vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/result_imgPhoto">
-
-            </TableLayout>
-
             <TextView
                 android:id="@+id/result_txtStatus"
                 android:layout_width="wrap_content"
@@ -50,7 +38,34 @@
                 android:textSize="34sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/result_tableLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/result_imgPhoto" />
+
+            <HorizontalScrollView
+                android:id="@+id/result_horizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/result_txtStatus">
+
+                <TableLayout
+                    android:id="@+id/result_tableLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:scrollbars="horizontal|vertical">
+
+                </TableLayout>
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/result_btnAddRow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/result_horizontalScrollView"
+                android:text="@string/result_btnAddRow" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,7 +73,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/result_txtStatus">
+                app:layout_constraintTop_toBottomOf="@+id/result_btnAddRow">
 
                 <Button
                     android:id="@+id/result_btnRescan"
@@ -68,7 +83,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    android:text="@string/result_rescan" />
+                    android:text="@string/result_rescan"
+                    tools:ignore="TextContrastCheck" />
 
                 <Button
                     android:id="@+id/result_btnOk"
@@ -78,7 +94,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    android:text="@android:string/ok" />
+                    android:text="@android:string/ok"
+                    tools:ignore="TextContrastCheck" />
             </LinearLayout>
 
 

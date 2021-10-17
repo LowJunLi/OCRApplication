@@ -2,17 +2,20 @@ package com.example.ocrapplication;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,9 +29,11 @@ import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,6 +45,7 @@ public class OcrResult extends AppCompatActivity
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private String currentPhotoPath;
     private TextView txtStatus;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,21 +53,25 @@ public class OcrResult extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr_result);
 
-        ImageView imgPhoto = findViewById(R.id.result_imgPhoto);
         txtStatus = findViewById(R.id.result_txtStatus);
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->
         {
             if (result.getResultCode() == Activity.RESULT_OK)
             {
-                Bitmap photo = BitmapFactory.decodeFile(currentPhotoPath); //get picture from the directory
-                imgPhoto.setImageBitmap(photo);
-                performOCR(photo);
+                //Uri uri = Uri.parse(currentPhotoPath);
+                Uri uri = Uri.fromFile(new File((currentPhotoPath)));
+                openCropActivity(uri, uri); //same source and destination uri
             }
         });
+        dbHelper = new DBHelper(this);
 
         Button btnRescan = findViewById(R.id.result_btnRescan);
+        Button btnOk = findViewById(R.id.result_btnOk);
         btnRescan.setOnClickListener(v -> takePicture());
+        btnOk.setOnClickListener(v -> saveToDatabase());
+        Button btnAddRow = findViewById(R.id.result_btnAddRow);
+        btnAddRow.setOnClickListener(v -> addRow());
 
         takePicture(); //Let user take photo when the user access this page from main menu
     }
@@ -130,6 +140,42 @@ public class OcrResult extends AppCompatActivity
     }
 
     /**
+     *  Let user crop the image
+     *
+     * @param sourceUri       the source of the image
+     * @param destinationUri  the destination of the cropped image
+     */
+    private void openCropActivity(Uri sourceUri, Uri destinationUri)
+    {
+        UCrop.of(sourceUri, destinationUri)
+                .withAspectRatio(5f, 5f)
+                .start(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK)
+        {
+            Uri imageUri = UCrop.getOutput(data);
+            Bitmap bitmap;
+            try
+            {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                ImageView imgPhoto = findViewById(R.id.result_imgPhoto);
+                imgPhoto.setImageBitmap(bitmap);
+                performOCR(bitmap);
+            }
+            catch(IOException ex)
+            {
+                Log.e("URI resolve error", ex.getMessage());
+            }
+
+        }
+    }
+
+    /**
      * Perform OCR on the picture
      */
     public void performOCR(Bitmap photo)
@@ -141,7 +187,14 @@ public class OcrResult extends AppCompatActivity
         {
             txtStatus.setText(R.string.java_message_ocr_completion);
             processTextRecognitionResult(visionText);
-        }).addOnFailureListener(e -> txtStatus.setText(R.string.java_error_ocr_fail));
+        }).addOnFailureListener(e ->
+                {
+                    txtStatus.setText(R.string.java_error_ocr_fail);
+                    Log.e("OCR Error", e.getMessage());
+                }
+
+
+        );
     }
 
     /**
@@ -151,7 +204,7 @@ public class OcrResult extends AppCompatActivity
      */
     public void processTextRecognitionResult(Text visionText)
     {
-        ArrayList<String> blocks = new ArrayList<String>();
+        ArrayList<String> blocks = new ArrayList<>();
         for (Text.TextBlock block: visionText.getTextBlocks())
         {
             blocks.add(block.getText());
@@ -159,13 +212,13 @@ public class OcrResult extends AppCompatActivity
 
         if (blocks.size() == 0)
         {
-            txtStatus.append(getString(R.string.java_message_ocr_no_text_detected));
+            txtStatus.append(" " + getString(R.string.java_message_ocr_no_text_detected));
         }
         else
         {
-            txtStatus.append(getString(R.string.java_message_ocr_text_detected));
-            displayEditableTable(blocks);
+            txtStatus.append(" " + getString(R.string.java_message_ocr_text_detected));
         }
+        displayEditableTable(blocks);
     }
 
     /**
@@ -190,17 +243,17 @@ public class OcrResult extends AppCompatActivity
         TableRow header = new TableRow(this);
 
         TextView tvDate = new TextView(this);
-        tvDate.setText("Date");
+        tvDate.setText(R.string.java_table_header_date);
         TextView tvTime = new TextView(this);
-        tvTime.setText("Time");
+        tvTime.setText(R.string.java_table_header_time);
         TextView tvName = new TextView(this);
-        tvName.setText("Name");
+        tvName.setText(R.string.java_table_header_name);
         TextView tvTemperature = new TextView(this);
-        tvTemperature.setText("Temperature");
+        tvTemperature.setText(R.string.java_table_header_temperature);
         TextView tvPhone = new TextView(this);
-        tvPhone.setText("Phone");
+        tvPhone.setText(R.string.java_table_header_phone);
         TextView tvRemark = new TextView(this);
-        tvRemark.setText("Remark");
+        tvRemark.setText(R.string.java_table_header_remark);
 
         header.addView(tvDate);
         header.addView(tvTime);
@@ -229,14 +282,264 @@ public class OcrResult extends AppCompatActivity
             EditText etRemark = new EditText(this);
             etRemark.setText(data.get(i++));
 
+            Button btnDelete = new Button(this);
+
+            //https://stackoverflow.com/questions/11050059/delete-row-dynamically-from-table-layout-in-android
+            btnDelete.setOnClickListener(v ->
+            {
+                // row is your row, the parent of the clicked button
+                View row1 = (View) v.getParent();
+                // container contains all the rows, you could keep a variable somewhere else to the container which you can refer to here
+                ViewGroup container = ((ViewGroup) row1.getParent());
+                // delete the row and invalidate your view so it gets redrawn
+                container.removeView(row1);
+                container.invalidate();
+            });
+
             row.addView(etDate);
             row.addView(etTime);
             row.addView(etName);
             row.addView(etTemperature);
             row.addView(etPhone);
             row.addView(etRemark);
+            row.addView(btnDelete);
 
             table.addView(row);
         }
+    }
+
+    /**
+     *
+     */
+    public void addRow()
+    {
+        TableLayout table = findViewById(R.id.result_tableLayout);
+        TableRow row = new TableRow(this);
+        EditText etDate = new EditText(this);
+        etDate.setText("");
+        EditText etTime = new EditText(this);
+        etTime.setText("");
+        EditText etName = new EditText(this);
+        etName.setText("");
+        EditText etTemperature = new EditText(this);
+        etTemperature.setText("");
+        EditText etPhone = new EditText(this);
+        etPhone.setText("");
+        EditText etRemark = new EditText(this);
+        etRemark.setText("");
+
+        Button btnDelete = new Button(this);
+
+        //https://stackoverflow.com/questions/11050059/delete-row-dynamically-from-table-layout-in-android
+        btnDelete.setOnClickListener(v ->
+        {
+            // row is your row, the parent of the clicked button
+            View row1 = (View) v.getParent();
+            // container contains all the rows, you could keep a variable somewhere else to the container which you can refer to here
+            ViewGroup container = ((ViewGroup) row1.getParent());
+            // delete the row and invalidate your view so it gets redrawn
+            container.removeView(row1);
+            container.invalidate();
+        });
+
+        row.addView(etDate);
+        row.addView(etTime);
+        row.addView(etName);
+        row.addView(etTemperature);
+        row.addView(etPhone);
+        row.addView(etRemark);
+        row.addView(btnDelete);
+
+        table.addView(row);
+    }
+
+
+    /**
+     * Get all data from table
+     *
+     * @param tableID  the resource ID of table layout
+     * @return         the table data in 2D array. Return null if any cell contains invalid data.
+     */
+    @Nullable
+    public String[][] getContentInTable(int tableID)
+    {
+        TableLayout table = findViewById(tableID);
+        final int colNum = 6;
+        final int rowNum = table.getChildCount();
+        String[][] data = new String[rowNum - 1][colNum];
+
+        //start at i = 1 because i = 0 is header
+        for(int i = 1; i < rowNum; i++)
+        {
+            View child = table.getChildAt(i);
+            if (child instanceof TableRow)
+            {
+                TableRow row = (TableRow) child;
+                for (int j = 0; j < colNum; j++)
+                {
+                    View view = row.getChildAt(j);
+                    if(view instanceof EditText)
+                    {
+                        EditText editText = ((EditText) view);
+
+                        if(validateCell(editText, j))
+                        {
+                            data[i - 1][j] = editText.getText().toString();
+                        }
+                        else
+                        {
+                            return null;
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+        return data;
+    }
+
+    /**
+     *
+     */
+    public boolean validateCell(EditText editText, int colIndex)
+    {
+        String input = editText.getText().toString();
+        switch(colIndex)
+        {
+            case 0: //date
+                if(!checkIsValidDate(input))
+                {
+                    editText.setError(getString(R.string.java_error_invalid_date));
+                    return false;
+                }
+                return true;
+            case 1: //time
+                if(!checkIsValidTime(input))
+                {
+                    editText.setError(getString(R.string.java_error_invalid_time));
+                    return false;
+                }
+                return true;
+            case 2: //name
+                return true;
+            case 3: //temperature
+                try
+                {
+                    double temperature = Double.parseDouble(input);
+                    if(temperature < 35 || temperature > 42)
+                    {
+                        editText.setError(getString(R.string.java_error_invalid_temperature));
+                        return false;
+                    }
+                }
+                catch(NumberFormatException ex)
+                {
+                    editText.setError(getString(R.string.java_error_non_numeric_input));
+                    return false;
+                }
+                return true;
+            case 4: //phone
+                return input.matches("^(\\+?6?01)[0-46-9]-*[0-9]{7,8}$"); //regex to check if the number is malaysian phone number
+            case 5: //remark
+                return true;
+            default:
+                return false;
+        }
+    }
+
+
+    /**
+     * Check if the date is valid
+     *
+     * @param input  date input
+     * @return       true if the input is a valid date, otherwise false
+     */
+    public boolean checkIsValidDate(String input)
+    {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        dateFormat.setLenient(false);
+        try
+        {
+            dateFormat.parse(input.trim());
+        }
+        catch (ParseException ex)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if the time is valid
+     *
+     * @param input  time input
+     * @return       true if the input is a valid time, otherwise false
+     */
+    public boolean checkIsValidTime(String input)
+    {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+        dateFormat.setLenient(false);
+        try
+        {
+            dateFormat.parse(input.trim());
+        }
+        catch (ParseException ex)
+        {
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     *  Save data displayed in the table to database
+     */
+    public void saveToDatabase()
+    {
+        String[][] data = getContentInTable(R.id.result_tableLayout);
+        if(data == null)
+        {
+            displayToast(getString(R.string.java_error_unable_to_save));
+            return;
+        }
+
+        for (String[] datum : data)
+        {
+            Date dateTime;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH);
+            try
+            {
+                dateTime = dateFormat.parse(datum[0] + " " + datum[1]);
+            }
+            catch (ParseException ex)
+            {
+                Log.e("DateTime Parse Error", "In saveToDatabase");
+                return;
+            }
+
+            long enterDateTime = 0;
+            if (dateTime != null)
+            {
+                enterDateTime = dateTime.getTime();
+            }
+            String name = datum[2];
+            double temperature;
+            try
+            {
+                temperature = Double.parseDouble(datum[3]);
+            }
+            catch (NumberFormatException ex)
+            {
+                Log.e("Number Format error", "In saveToDatabase");
+                return;
+            }
+            String phone = datum[4];
+            String remark = datum[5];
+
+            dbHelper.insertRecord(enterDateTime, name, temperature, phone, remark);
+        }
+
     }
 }

@@ -26,13 +26,13 @@ public class MainActivity extends AppCompatActivity
         currentLocale = getResources().getConfiguration().locale;
 
         Button btnViewAllData = findViewById(R.id.main_btnViewAllData);
-        //Button btnDownload = findViewById(R.id.main_btnDownload);
+        Button btnDownload = findViewById(R.id.main_btnDownload);
         Button btnManageAccount = findViewById(R.id.main_btnManageAccount);
         FloatingActionButton btnCamera = findViewById(R.id.main_btnCamera);
 
         btnViewAllData.setOnClickListener(v -> gotoPage(AllRecords.class));
         btnManageAccount.setOnClickListener(v -> gotoPage(ManageAccount.class));
-
+        btnDownload.setOnClickListener(v -> gotoPage(ImportExportDatabase.class));
         btnCamera.setOnClickListener(v -> gotoPage(OcrResult.class));
     }
 

@@ -46,4 +46,27 @@
     <string name="java_error_invalid_email">Sila masukkan alamat emel yang sah</string>
     <string name="java_error_empty_recovery_email">Sila masukkan e-mel pemulihan</string>
     <string name="java_message_press_again_to_exit">Tekan kembali sekali lagi untuk menutup aplikasi</string>
+    <string name="java_error_no_camera_app">Tiada aplikasi di telefon anda dapat mengambil gambar</string>
+    <string name="java_message_ocr_completion">OCR Selesai</string>
+    <string name="java_message_please_take_picture">Sila mengambil gambar</string>
+    <string name="java_error_no_ocr_result">Tiada teks dikesan oleh OCR, sila mengambil gambar lagi</string>
+    <string name="java_error_ocr_fail">OCR tidak berfungsi</string>
+    <string name="java_message_ocr_no_text_detected">Tiada teks dikesan</string>
+    <string name="java_message_ocr_text_detected">Hasil OCR</string>
+    <string name="java_error_fail_create_photo_file">Gagal membuat fail photo</string>
+    <string name="java_table_header_date">Tarikh</string>
+    <string name="java_table_header_time">Masa</string>
+    <string name="java_table_header_name">Nama</string>
+    <string name="java_table_header_temperature">Suhu</string>
+    <string name="java_table_header_phone">No Telefon</string>
+    <string name="java_table_header_remark">Catatan</string>
+    <string name="java_error_invalid_temperature">Julat suhu tidak sah, suhu mestilah antara 35.0 dan 42.0</string>
+    <string name="java_error_non_numeric_input">Input mestilah nombor</string>
+    <string name="java_error_unable_to_save">Tidak dapat menyimpan data kerana adad data yang tidak sah</string>
+    <string name="java_error_invalid_date">Format tarikh tidak sah, sila ikuti format tarikh dd-MM-YYYY</string>
+    <string name="java_error_invalid_time">Format masa tidak sah, sila ikuti format masa HH: mm</string>
+    <string name="result_rescan">Mengambil gambar sekali lagi</string>
+    <string name="result_processing">Proses…</string>
+    <string name="result_desc_imgPhoto">Foto yang diambil oleh pengguna</string>
+    <string name="result_btnAddRow">Tambah barisan</string>
 </resources>

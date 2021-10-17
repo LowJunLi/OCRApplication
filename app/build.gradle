@@ -76,6 +76,7 @@ dependencies {
     //roboelectric
     testImplementation 'org.robolectric:robolectric:4.4'
 
-
+    //UCrop (used to crop image)
+    implementation 'com.github.yalantis:ucrop:2.2.6-native'
 
 }

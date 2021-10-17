@@ -5,13 +5,17 @@
       <map>
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable-anydpi/ic_download.xml" value="0.12777777777777777" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable-anydpi/ic_manage_account.xml" value="0.12222222222222222" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable/login_background.xml" value="0.13240740740740742" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable/rectangle.xml" value="0.1425925925925926" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_all_database_records.xml" value="0.2246376811594203" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_all_records.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_camera.xml" value="0.21965579710144928" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_database_records.xml" value="0.21965579710144928" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_display_data.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_email_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_import_export_database.xml" value="0.2318840579710145" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_login.xml" value="0.24139492753623187" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_main.xml" value="0.24139492753623187" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_manage_account.xml" value="0.21965579710144928" />
@@ -21,6 +25,8 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/dialog_change_profile.xml" value="0.21467391304347827" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/fragment_settings.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/menu/menu_settings.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/xml/settings.xml" value="0.2477355072463768" />
       </map>
     </option>
