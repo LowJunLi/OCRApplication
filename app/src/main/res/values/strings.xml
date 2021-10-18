@@ -155,5 +155,27 @@
     <string name="importExport_btnImport">Import</string>
     <string name="importExport_label_export">Export the database file to SD card</string>
     <string name="importExport_label_import">Import the database file. The current database file will be deleted and replaced by new database file.</string>
+    <string name="display_hint_etSearch">Enter name to search</string>
+    <string name="display_desc_btnSearch">Seacrh for text in text field</string>
+    <string name="btnDelete">Delete</string>
+    <string name="display_btnSetFilter">Set Filter</string>
+
+
+    <!-- dialog_filter_options -->
+    <string name="dialog_filter_title">Filter Settings</string>
+    <string name="dialog_filter_cbEnable">Enable</string>
+    <string name="dialog_filter_from">From:</string>
+    <string name="dialog_filter_to">To:</string>
+    <string name="dialog_filter_min">min</string>
+    <string name="dialog_filter_max">max</string>
+    <string name="dialog_filter_apply_filter">Apply Filter</string>
+    <string name="dialog_filter_select_start_date_time">Select a starting date and time from pickers</string>
+    <string name="dialog_filter_select_start_date">Select a starting date</string>
+    <string name="dialog_filter_select_start_time">Select a starting time</string>
+    <string name="dialog_filter_select_end_date_time">Select a ending date and time from pickers</string>
+    <string name="dialog_filter_select_end_date">Select a ending date</string>
+    <string name="dialog_filter_select_end_time">Select a ending time</string>
+    <string name="dialog_filter_desc_temperature_filter">Enable temperature filter</string>
+    <string name="dialog_filter_desc_date_filter">Enable date filter</string>
 
 </resources>

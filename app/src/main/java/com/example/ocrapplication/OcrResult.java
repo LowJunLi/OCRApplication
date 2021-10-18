@@ -283,6 +283,7 @@ public class OcrResult extends AppCompatActivity
             etRemark.setText(data.get(i++));
 
             Button btnDelete = new Button(this);
+            btnDelete.setText(R.string.btnDelete);
 
             //https://stackoverflow.com/questions/11050059/delete-row-dynamically-from-table-layout-in-android
             btnDelete.setOnClickListener(v ->

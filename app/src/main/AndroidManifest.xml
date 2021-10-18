@@ -53,9 +53,6 @@
             android:name=".ManageAccount"
             android:exported="true" />
         <activity
-            android:name=".AllRecords"
-            android:exported="true" />
-        <activity
             android:name=".SettingsActivity"
             android:exported="true" />
         <activity

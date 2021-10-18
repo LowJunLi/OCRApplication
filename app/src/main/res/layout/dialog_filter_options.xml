@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginRight="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_filter_txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/dark_blue"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/dialog_filter_title"
+        android:textColor="@color/white"
+        android:textColorHighlight="@color/white"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_filter_txtDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/java_table_header_date"
+            android:textColor="@color/light_blue"
+            android:textSize="24sp" />
+
+        <CheckBox
+            android:id="@+id/dialog_filter_cbDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:contentDescription="@string/dialog_filter_desc_date_filter"
+            android:text="@string/dialog_filter_cbEnable" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dialog_filter_date_txtFrom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_filter_from"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_filter_date_txtInput1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:ems="10"
+            android:importantForAutofill="no"
+            android:minHeight="48dp"
+            android:text="@string/dialog_filter_select_start_date_time"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/dialog_filter_date_bntDatePicker1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/dialog_filter_select_start_date"
+            android:minHeight="48dp"
+            app:srcCompat="@drawable/ic_date_picker" />
+
+        <ImageButton
+            android:id="@+id/dialog_filter_date_btnTimePicker1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/dialog_filter_select_start_time"
+            android:minHeight="48dp"
+            app:srcCompat="@drawable/ic_time_picker" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dialog_filter_date_txtTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_filter_to"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_filter_date_txtInput2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:ems="10"
+            android:minHeight="48dp"
+            android:text="@string/dialog_filter_select_end_date_time"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/dialog_filter_date_bntDatePicker2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/dialog_filter_select_end_date"
+            android:minHeight="48dp"
+            app:srcCompat="@drawable/ic_date_picker" />
+
+        <ImageButton
+            android:id="@+id/dialog_filter_date_btnTimePicker2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/dialog_filter_select_end_time"
+            android:minHeight="48dp"
+            app:srcCompat="@drawable/ic_time_picker" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_filter_txtTemperature"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/java_table_header_temperature"
+            android:textColor="@color/light_blue"
+            android:textSize="24sp" />
+
+        <CheckBox
+            android:id="@+id/dialog_filter_cbTemperature"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:contentDescription="@string/dialog_filter_desc_temperature_filter"
+            android:text="@string/dialog_filter_cbEnable" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_filter_temperature_txtFrom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/dialog_filter_from"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/dialog_filter_temperature_etFrom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/dialog_filter_min"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            tools:ignore="TextContrastCheck"
+            android:importantForAutofill="no" />
+
+        <TextView
+            android:id="@+id/dialog_filter_temperature_txtTo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/dialog_filter_to"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/dialog_filter_temperature_etTo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/dialog_filter_max"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            tools:ignore="TextContrastCheck"
+            android:importantForAutofill="no" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="24dp"
+        android:divider="?android:dividerHorizontal"
+        android:dividerPadding="8dp"
+        android:orientation="horizontal"
+        android:showDividers="middle">
+
+        <Button
+            android:id="@+id/dialog_changeProfile_btnUpdateProfile"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/dialog_filter_apply_filter" />
+
+        <Button
+            android:id="@+id/dialog_changeProfile_btnCancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btnCancel" />
+    </LinearLayout>
+
+</LinearLayout>

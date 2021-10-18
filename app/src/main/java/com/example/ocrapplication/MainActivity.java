@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity
         Button btnManageAccount = findViewById(R.id.main_btnManageAccount);
         FloatingActionButton btnCamera = findViewById(R.id.main_btnCamera);
 
-        btnViewAllData.setOnClickListener(v -> gotoPage(AllRecords.class));
+        btnViewAllData.setOnClickListener(v -> gotoPage(DisplayData.class));
         btnManageAccount.setOnClickListener(v -> gotoPage(ManageAccount.class));
         btnDownload.setOnClickListener(v -> gotoPage(ImportExportDatabase.class));
         btnCamera.setOnClickListener(v -> gotoPage(OcrResult.class));
