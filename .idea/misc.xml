@@ -9,6 +9,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable/login_background.xml" value="0.13240740740740742" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable/rectangle.xml" value="0.1425925925925926" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/drawable/row_border.xml" value="0.13055555555555556" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_all_database_records.xml" value="0.2246376811594203" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_all_records.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_camera.xml" value="0.21965579710144928" />
@@ -23,6 +24,8 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/activity_use_camera.xml" value="0.24094202898550723" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/dialog_change_password.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/dialog_change_profile.xml" value="0.21467391304347827" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/dialog_delete_row.xml" value="0.23867753623188406" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/dialog_edit_row.xml" value="0.264" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/dialog_filter_options.xml" value="0.2477355072463768" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/layout/fragment_settings.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/User/AndroidStudioProjects/OCRApplication/app/src/main/res/menu/menu_settings.xml" value="0.25416666666666665" />

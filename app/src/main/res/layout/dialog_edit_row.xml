@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_editRow_txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/dark_blue"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/dialog_editRow_title"
+        android:textColor="@color/white"
+        android:textColorHighlight="@color/white"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/dialog_editRow_txtID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/java_table_header_ID"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/dialog_editRow_txtDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/java_table_header_date"
+        android:textColor="@color/light_blue"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/dialog_editRow_etDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/dialog_editRow_hint_date"
+        android:importantForAutofill="no"
+        android:inputType="date"
+        android:minHeight="48dp"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/dialog_editRow_txtTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/java_table_header_time"
+        android:textColor="@color/light_blue"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/dialog_editRow_etTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/dialog_editRow_hint_time"
+        android:importantForAutofill="no"
+        android:inputType="time"
+        android:minHeight="48dp"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/dialog_editRow_txtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/java_table_header_name"
+        android:textColor="@color/light_blue"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/dialog_editRow_etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/dialog_editRow_hint_name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/dialog_editRow_txtTemperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/java_table_header_temperature"
+        android:textColor="@color/light_blue"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/dialog_editRow_etTemperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/dialog_editRow_hint_temperature"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/dialog_editRow_txtPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/java_table_header_phone"
+        android:textColor="@color/light_blue"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/dialog_editRow_etPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/dialog_editRow_hint_phone"
+        android:importantForAutofill="no"
+        android:inputType="phone"
+        android:minHeight="48dp"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/dialog_editRow_txtReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/java_table_header_remark"
+        android:textColor="@color/light_blue"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/dialog_editRow_etReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/dialog_editRow_hint_review"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:minHeight="48dp"
+        tools:ignore="TextContrastCheck" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="24dp"
+        android:divider="?android:dividerHorizontal"
+        android:dividerPadding="8dp"
+        android:orientation="horizontal"
+        android:showDividers="middle">
+
+        <Button
+            android:id="@+id/dialog_editRow_btnUpdateRow"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/dialog_editRow_btnUpdateData" />
+
+        <Button
+            android:id="@+id/dialog_editRow_btnCancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btnCancel" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

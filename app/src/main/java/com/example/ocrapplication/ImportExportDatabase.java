@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.View;
 import android.widget.Button;
 
 import java.io.File;
@@ -22,6 +23,11 @@ public class ImportExportDatabase extends AppCompatActivity
 
         Button btnExport = findViewById(R.id.importExport_btnExport);
         Button btnImport = findViewById(R.id.importExport_btnImport);
+
+        ///temporary
+        findViewById(R.id.importExport_txtImport).setVisibility(View.INVISIBLE);
+        btnImport.setVisibility(View.INVISIBLE);
+        ///end of temporary
 
         btnExport.setOnClickListener(v -> exportDatabase());
         btnImport.setOnClickListener(v -> importDatabase());

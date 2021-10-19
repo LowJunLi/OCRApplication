@@ -69,7 +69,11 @@ public class OcrResult extends AppCompatActivity
         Button btnRescan = findViewById(R.id.result_btnRescan);
         Button btnOk = findViewById(R.id.result_btnOk);
         btnRescan.setOnClickListener(v -> takePicture());
-        btnOk.setOnClickListener(v -> saveToDatabase());
+        btnOk.setOnClickListener(v ->
+                {
+                    saveToDatabase();
+
+                });
         Button btnAddRow = findViewById(R.id.result_btnAddRow);
         btnAddRow.setOnClickListener(v -> addRow());
 
@@ -148,7 +152,6 @@ public class OcrResult extends AppCompatActivity
     private void openCropActivity(Uri sourceUri, Uri destinationUri)
     {
         UCrop.of(sourceUri, destinationUri)
-                .withAspectRatio(5f, 5f)
                 .start(this);
     }
 
@@ -240,34 +243,12 @@ public class OcrResult extends AppCompatActivity
             data.add("");
         }
 
-        TableRow header = new TableRow(this);
-
-        TextView tvDate = new TextView(this);
-        tvDate.setText(R.string.java_table_header_date);
-        TextView tvTime = new TextView(this);
-        tvTime.setText(R.string.java_table_header_time);
-        TextView tvName = new TextView(this);
-        tvName.setText(R.string.java_table_header_name);
-        TextView tvTemperature = new TextView(this);
-        tvTemperature.setText(R.string.java_table_header_temperature);
-        TextView tvPhone = new TextView(this);
-        tvPhone.setText(R.string.java_table_header_phone);
-        TextView tvRemark = new TextView(this);
-        tvRemark.setText(R.string.java_table_header_remark);
-
-        header.addView(tvDate);
-        header.addView(tvTime);
-        header.addView(tvName);
-        header.addView(tvTemperature);
-        header.addView(tvPhone);
-        header.addView(tvRemark);
-
-        table.addView(header);
-
+        addHeader(table);
 
         for (int i = 0; i < data.size();)
         {
             TableRow row = new TableRow(this);
+            row.setBackgroundResource(R.drawable.row_border);
 
             EditText etDate = new EditText(this);
             etDate.setText(data.get(i++));
@@ -310,12 +291,53 @@ public class OcrResult extends AppCompatActivity
     }
 
     /**
+     * Add header to the table
      *
+     * @param table  the table to add header
+     */
+    public void addHeader(TableLayout table)
+    {
+        TableRow header = new TableRow(this);
+        header.setBackgroundResource(R.drawable.row_border);
+
+        TextView tvDate = new TextView(this);
+        tvDate.setText(R.string.java_table_header_date);
+        TextView tvTime = new TextView(this);
+        tvTime.setText(R.string.java_table_header_time);
+        TextView tvName = new TextView(this);
+        tvName.setText(R.string.java_table_header_name);
+        TextView tvTemperature = new TextView(this);
+        tvTemperature.setText(R.string.java_table_header_temperature);
+        TextView tvPhone = new TextView(this);
+        tvPhone.setText(R.string.java_table_header_phone);
+        TextView tvRemark = new TextView(this);
+        tvRemark.setText(R.string.java_table_header_remark);
+
+        header.addView(tvDate);
+        header.addView(tvTime);
+        header.addView(tvName);
+        header.addView(tvTemperature);
+        header.addView(tvPhone);
+        header.addView(tvRemark);
+
+        table.addView(header);
+    }
+
+    /**
+     *  Add empty row to the table
      */
     public void addRow()
     {
         TableLayout table = findViewById(R.id.result_tableLayout);
+
+        if(table.getChildCount() == 0) //if table has no child
+        {
+            addHeader(table);
+        }
+
         TableRow row = new TableRow(this);
+        row.setBackgroundResource(R.drawable.row_border);
+
         EditText etDate = new EditText(this);
         etDate.setText("");
         EditText etTime = new EditText(this);
@@ -330,6 +352,7 @@ public class OcrResult extends AppCompatActivity
         etRemark.setText("");
 
         Button btnDelete = new Button(this);
+        btnDelete.setText(R.string.btnDelete);
 
         //https://stackoverflow.com/questions/11050059/delete-row-dynamically-from-table-layout-in-android
         btnDelete.setOnClickListener(v ->
@@ -353,7 +376,6 @@ public class OcrResult extends AppCompatActivity
 
         table.addView(row);
     }
-
 
     /**
      * Get all data from table
@@ -539,7 +561,13 @@ public class OcrResult extends AppCompatActivity
             String phone = datum[4];
             String remark = datum[5];
 
-            dbHelper.insertRecord(enterDateTime, name, temperature, phone, remark);
+            if(dbHelper.insertRecord(enterDateTime, name, temperature, phone, remark))
+            {
+                displayToast(getString(R.string.java_message_insert_success));
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
         }
 
     }
