@@ -142,14 +142,24 @@
     <string name="java_error_unable_to_save">Unable to save data because there is invalid data</string>
     <string name="java_error_invalid_date">Invalid date format, please follow date format dd-MM-YYYY</string>
     <string name="java_error_invalid_time">Invalid time format, please follow time format HH:mm</string>
-    <string name="java_format_date">%d-%d-%d</string>
-    <string name="java_format_time">%d:%s</string>
+    <string name="java_format_date" translatable="false">%d-%d-%d</string>
+    <string name="java_format_time" translatable="false">%d:%s</string>
     <string name="java_error_invalid_temperature_range">The maximum temperature must be equal or larger than minimum temperature</string>
     <string name="java_message_filter_applied">Filter applied</string>
     <string name="java_table_header_ID">ID</string>
     <string name="java_error_no_temperature_input">Please enter temperature</string>
     <string name="java_error_pick_date">Please select a date using date picker</string>
     <string name="java_error_pick_time">Please select a time using time picker</string>
+    <string name="java_message_update_success">Record successfully updated</string>
+    <string name="java_message_insert_success">Insert data successful</string>
+    <string name="java_message_export_success">The database exported successfully</string>
+    <string name="java_error_export_fail">Export process fail</string>
+    <string name="java_message_import_success">The database has been imported successfully</string>
+    <string name="java_error_import_fail">Import process fail</string>
+    <string name="java_error_database_not_exist">Database not yet exists</string>
+    <string name="java_table_header_date_time">Date and Time</string>
+    <string name="java_message_data_deleted">Data deleted</string>
+    <string name="java_error_delete_fail">Fail to delete data, please try again</string>
 
     <!-- activity_ocr_result.xml -->
     <string name="result_rescan">Rescan</string>
@@ -162,13 +172,14 @@
     <string name="importExport_btnImport">Import</string>
     <string name="importExport_label_export">Export the database file to SD card</string>
     <string name="importExport_label_import">Import the database file. The current database file will be deleted and replaced by new database file.</string>
+
+
+
+    <!-- dialog_filter_options.xml -->
     <string name="display_hint_etSearch">Enter name to search</string>
-    <string name="display_desc_btnSearch">Seacrh for text in text field</string>
+    <string name="display_desc_btnSearch">Search for text in text field</string>
     <string name="btnDelete">Delete</string>
     <string name="display_btnSetFilter">Set Filter</string>
-
-
-    <!-- dialog_filter_options -->
     <string name="dialog_filter_title">Filter Settings</string>
     <string name="dialog_filter_cbEnable">Enable</string>
     <string name="dialog_filter_from">From:</string>
@@ -184,21 +195,19 @@
     <string name="dialog_filter_select_end_time">Select a ending time</string>
     <string name="dialog_filter_desc_temperature_filter">Enable temperature filter</string>
     <string name="dialog_filter_desc_date_filter">Enable date filter</string>
+
+    <!-- dialog_edit_row.xml -->
     <string name="display_label_descending">Descending</string>
     <string name="display_label_ascending">Ascending</string>
     <string name="btnEdit">Edit</string>
-    <string name="java_table_header_date_time">Date and Time</string>
-    <string name="java_message_data_deleted">Data deleted</string>
-    <string name="java_error_delete_fail">Fail to delete data, please try again</string>
     <string name="dialog_editRow_title">Edit Data</string>
     <string name="dialog_editRow_hint_date">Enter date</string>
     <string name="dialog_editRow_hint_time">Enter time</string>
     <string name="dialog_editRow_hint_name">Enter name</string>
     <string name="dialog_editRow_hint_temperature">Enter temperature</string>
     <string name="dialog_editRow_hint_phone">Enter phone number</string>
-    <string name="dialog_editRow_hint_review">Enter review</string>
+    <string name="dialog_editRow_hint_review">Enter remark</string>
     <string name="dialog_editRow_btnUpdateData">Update Data</string>
-    <string name="java_message_update_success">Record successfully updated</string>
-    <string name="java_message_insert_success">Insert Data successful</string>
+
 
 </resources>
