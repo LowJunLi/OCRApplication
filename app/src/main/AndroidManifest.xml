@@ -27,9 +27,13 @@
         android:theme="@style/Theme.OCRApplication">
         <activity
             android:name=".DisplayData"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:exported="true" />
         <activity
             android:name=".ImportExportDatabase"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:exported="true" />
 
         <meta-data
@@ -48,22 +52,31 @@
 
         <activity
             android:name=".OcrResult"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:exported="true" />
         <activity
             android:name=".ManageAccount"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:exported="true" />
         <activity
             android:name=".SettingsActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:exported="true" />
         <activity
             android:name=".EmailLogin"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:exported="true"
             android:label="Email Login"
             android:parentActivityName=".Login" />
         <activity
             android:name=".Login"
-            android:exported="true"
-            android:label="Login">
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,9 +86,12 @@
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:exported="true" />
     </application>
 

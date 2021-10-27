@@ -1,6 +1,6 @@
 <resources>
     <!-- Application Name -->
-    <string name="app_name">OCRApplication</string>
+    <string name="app_name">Logbook OCR</string>
 
     <!-- activity_login.xml -->
     <!-- The content description for app_logo.PNG-->
@@ -160,6 +160,9 @@
     <string name="java_table_header_date_time">Date and Time</string>
     <string name="java_message_data_deleted">Data deleted</string>
     <string name="java_error_delete_fail">Fail to delete data, please try again</string>
+    <string name="java_error_enter_date_time">Please enter all the date and time for the date time filter</string>
+    <string name="java_message_password_reset_complete">Password has been reset to default password</string>
+    <string name="java_error_invalid_malaysia_phone_number">Please enter a valid Malaysia phone number</string>
 
     <!-- activity_ocr_result.xml -->
     <string name="result_rescan">Rescan</string>
@@ -208,6 +211,7 @@
     <string name="dialog_editRow_hint_phone">Enter phone number</string>
     <string name="dialog_editRow_hint_review">Enter remark</string>
     <string name="dialog_editRow_btnUpdateData">Update Data</string>
+
 
 
 </resources>

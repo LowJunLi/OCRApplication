@@ -308,7 +308,7 @@ public class DisplayData extends AppCompatActivity
 
             if (emptyDateTimeError)
             {
-                displayToast("Please enter all the date and time for the date time filter");
+                displayToast(getString(R.string.java_error_enter_date_time));
                 return;
             }
 
@@ -505,6 +505,7 @@ public class DisplayData extends AppCompatActivity
             //phone number validation
             if(!phone.matches("^(\\+?6?01)[0-46-9]-*[0-9]{7,8}$"))//regex to check if the number is malaysian phone number
             {
+                etPhone.setError(getString(R.string.java_error_invalid_malaysia_phone_number));
                 validationPass = false;
             }
 

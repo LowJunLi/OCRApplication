@@ -464,7 +464,16 @@ public class OcrResult extends AppCompatActivity
                 }
                 return true;
             case 4: //phone
-                return input.matches("^(\\+?6?01)[0-46-9]-*[0-9]{7,8}$"); //regex to check if the number is malaysian phone number
+                if(input.matches("^(\\+?6?01)[0-46-9]-*[0-9]{7,8}$"))//regex to check if the number is malaysian phone number
+                {
+                    return true;
+                }
+                else
+                {
+                    editText.setError(getString(R.string.java_error_invalid_malaysia_phone_number));
+                    return false;
+                }
+
             case 5: //remark
                 return true;
             default:

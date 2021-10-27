@@ -2,17 +2,19 @@ package com.example.ocrapplication;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.PermissionChecker;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -24,6 +26,8 @@ import java.nio.channels.FileChannel;
 
 public class ImportExportDatabase extends AppCompatActivity
 {
+    private final int EXPORT_REQUEST_CODE = 1;
+    private final int IMPORT_REQUEST_CODE = 2;
     private ActivityResultLauncher<Intent> exportLauncher;
     private ActivityResultLauncher<Intent> importLauncher;
 
@@ -35,11 +39,6 @@ public class ImportExportDatabase extends AppCompatActivity
 
         Button btnExport = findViewById(R.id.importExport_btnExport);
         Button btnImport = findViewById(R.id.importExport_btnImport);
-
-        ///temporary
-        btnImport.setVisibility(View.INVISIBLE);
-        btnExport.setVisibility(View.INVISIBLE);
-        ///end of temporary
 
         exportLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->
         {
@@ -73,30 +72,56 @@ public class ImportExportDatabase extends AppCompatActivity
             }
         });
 
-        //btnExport.setOnClickListener(v -> exportDatabase());
-        //btnImport.setOnClickListener(v -> importDatabase());
+        btnExport.setOnClickListener(v -> checkExportPermission());
+        btnImport.setOnClickListener(v -> importDatabase());
     }
 
-    private void exportDatabase()
+    public void checkExportPermission()
     {
-        int permission = PermissionChecker.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission == PermissionChecker.PERMISSION_GRANTED)
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
         {
-            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("application/db");
-            intent.putExtra(Intent.EXTRA_TITLE, "OCRBackup.db");
-
-            exportLauncher.launch(intent);
+            exportDatabase();
         }
         else
         {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    1);
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXPORT_REQUEST_CODE);
         }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode)
+        {
+            case EXPORT_REQUEST_CODE:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    exportDatabase();
+                }
+                else
+                {
+                    displayToast("Unable to export because permission denied");
+                }
+                return;
+            case IMPORT_REQUEST_CODE:
+
+        }
+        // Other 'case' lines to check for other
+        // permissions this app might request.
+    }
+
+
+    private void exportDatabase()
+    {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/vnd.sqlite3");
+        intent.putExtra(Intent.EXTRA_TITLE, "OCRBackup.db");
+
+        exportLauncher.launch(intent);
     }
 
     /**
@@ -174,6 +199,7 @@ public class ImportExportDatabase extends AppCompatActivity
             displayToast(getString(R.string.java_error_database_not_exist));
         }
     }
+
 
     private void copyBackupDatabaseToReplaceCurrentDatabase(Uri uri)
     {

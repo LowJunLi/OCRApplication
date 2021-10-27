@@ -40,6 +40,10 @@ public class EmailLogin extends AppCompatActivity
             //correct recovery email
             else if(recoveryEmail.equals(pref.getString("recoveryEmail", "defaultEmail@gmail.com")))
             {
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("password", "Password"); //reset to default password
+                editor.apply();
+                displayToast(getString(R.string.java_message_password_reset_complete));
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             }

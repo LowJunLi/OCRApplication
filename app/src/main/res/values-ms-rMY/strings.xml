@@ -119,4 +119,7 @@
     <string name="dialog_editRow_hint_phone">Mengedit nombor telefon</string>
     <string name="dialog_editRow_hint_review">Mengedit catatan</string>
     <string name="dialog_editRow_btnUpdateData">Kemas Kini Data</string>
+    <string name="java_error_enter_date_time">Sila masukkan semua tarikh dan masa untuk penapis masa dan tarikh</string>
+    <string name="java_message_password_reset_complete">Kata laluan telah ditetapkan semula ke kata laluan lalai</string>
+    <string name="java_error_invalid_malaysia_phone_number">Sila masukkan nombor telefon Malaysia yang sah</string>
 </resources>
