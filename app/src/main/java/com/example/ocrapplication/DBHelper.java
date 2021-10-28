@@ -69,6 +69,10 @@ public class DBHelper extends SQLiteOpenHelper
         db.insert(TABLE_NAME, null, contentValues);
     }
 
+    public String getDatabaseName()
+    {
+        return DATABASE_NAME;
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
