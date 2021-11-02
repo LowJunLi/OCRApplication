@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -20,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 
 public class ImportExportDatabase extends AppCompatActivity
@@ -53,9 +53,7 @@ public class ImportExportDatabase extends AppCompatActivity
 
         btnExport.setOnClickListener(v -> exportDatabase());
 
-        findViewById(R.id.importExport_txtImport).setVisibility(View.INVISIBLE);
-        btnImport.setVisibility(View.INVISIBLE);
-        //btnImport.setOnClickListener(v -> selectFile());
+        btnImport.setOnClickListener(v -> selectFile());
     }
 
     private void copyFile(FileInputStream fromFile, FileOutputStream toFile) throws IOException
@@ -158,13 +156,13 @@ public class ImportExportDatabase extends AppCompatActivity
     }
 
     /**
-     *
+     * Let user select file before importing the file
      */
     public void selectFile()
     {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("application/vnd.sqlite3");
+        intent.setType("*/*");
         intent = Intent.createChooser(intent, "Choose a file");
 
         importLauncher.launch(intent);
@@ -181,16 +179,22 @@ public class ImportExportDatabase extends AppCompatActivity
         String currentDBPath = this.getDatabasePath(dbHelper.getDatabaseName()).toString();
         File currentDB = new File(currentDBPath);
 
-        FileInputStream fromStream;
-        FileOutputStream toStream;
-
         if (currentDB.exists())
         {
-            try
+            try(FileOutputStream toStream = new FileOutputStream(currentDB);
+                FileInputStream fromStream = (FileInputStream) getContentResolver().openInputStream(uri);
+                InputStreamReader reader = new InputStreamReader(fromStream))
             {
-                toStream = new FileOutputStream(currentDB);
-                fromStream = (FileInputStream) getContentResolver().openInputStream(uri);
-                replaceFileContent(fromStream, toStream);
+                if(isValidSQLite(reader))
+                {
+                    replaceFileContent(fromStream, toStream);
+                    displayToast(getString(R.string.java_message_import_success));
+                }
+                else
+                {
+                    displayToast(getString(R.string.java_error_not_sqlite_file));
+                }
+
             }
             catch (IOException ex)
             {
@@ -203,6 +207,37 @@ public class ImportExportDatabase extends AppCompatActivity
         {
             Log.e("Import failure", "Database not exist");
             displayToast(getString(R.string.java_error_import_fail));
+        }
+    }
+
+    /**
+     * Check if a file is SQLite database file
+     *
+     * @param reader the reader that is reading backup database
+     * @return true if the path contain sqlite database file, false otherwise
+     *
+     * @see <a href="https://stackoverflow.com/questions/39576646/android-check-if-a-file-is-a-valid-sqlite-database"
+     * Android: Check if a file is a valid SQLite database</a>
+     */
+    public boolean isValidSQLite(InputStreamReader reader)
+    {
+        try
+        {
+            StringBuilder sqliteText = new StringBuilder();
+            int ch = reader.read();
+
+            while (ch != -1 && sqliteText.length() < 16)
+            {
+                sqliteText.append((char)ch);
+                ch = reader.read();
+            }
+
+            return sqliteText.toString().equals("SQLite format 3\u0000");
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
         }
     }
 

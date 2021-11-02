@@ -163,6 +163,7 @@
     <string name="java_error_enter_date_time">Please enter all the date and time for the date time filter</string>
     <string name="java_message_password_reset_complete">Password has been reset to default password</string>
     <string name="java_error_invalid_malaysia_phone_number">Please enter a valid Malaysia phone number</string>
+    <string name="java_error_not_sqlite_file">Selected file is not SQLIte file, please reselect file</string>
 
     <!-- activity_ocr_result.xml -->
     <string name="result_rescan">Rescan</string>
@@ -173,7 +174,7 @@
     <!-- activity_import_export_database.xml -->
     <string name="importExport_btnExport">Export</string>
     <string name="importExport_btnImport">Import</string>
-    <string name="importExport_label_export">Export the database file to SD card</string>
+    <string name="importExport_label_export">Export the database file to Download folder</string>
     <string name="importExport_label_import">Import the database file. The current database file will be deleted and replaced by new database file.</string>
 
 
