@@ -166,6 +166,8 @@
     <string name="java_error_not_sqlite_file">Selected file is not SQLIte file, please reselect file</string>
 
     <!-- activity_ocr_result.xml -->
+    <string name="result_original_photo">Original Photo</string>
+    <string name="result_processed_photo">Processed Photo</string>
     <string name="result_rescan">Rescan</string>
     <string name="result_processing">Processing…</string>
     <string name="result_desc_imgPhoto">Photo taken by the user</string>

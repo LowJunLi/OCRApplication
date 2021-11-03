@@ -69,11 +69,7 @@ public class OcrResult extends AppCompatActivity
         Button btnRescan = findViewById(R.id.result_btnRescan);
         Button btnOk = findViewById(R.id.result_btnOk);
         btnRescan.setOnClickListener(v -> takePicture());
-        btnOk.setOnClickListener(v ->
-                {
-                    saveToDatabase();
-
-                });
+        btnOk.setOnClickListener(v -> saveToDatabase());
         Button btnAddRow = findViewById(R.id.result_btnAddRow);
         btnAddRow.setOnClickListener(v -> addRow());
 
@@ -166,7 +162,7 @@ public class OcrResult extends AppCompatActivity
             try
             {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                ImageView imgPhoto = findViewById(R.id.result_imgPhoto);
+                ImageView imgPhoto = findViewById(R.id.result_imgOriginalPhoto);
                 imgPhoto.setImageBitmap(bitmap);
                 performOCR(bitmap);
             }
@@ -208,6 +204,7 @@ public class OcrResult extends AppCompatActivity
     public void processTextRecognitionResult(Text visionText)
     {
         ArrayList<String> blocks = new ArrayList<>();
+
         for (Text.TextBlock block: visionText.getTextBlocks())
         {
             blocks.add(block.getText());

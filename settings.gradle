@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "OCRApplication"
 include ':app'
+include ':openCV_sdk'
