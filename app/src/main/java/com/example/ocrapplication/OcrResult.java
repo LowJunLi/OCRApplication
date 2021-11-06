@@ -179,46 +179,13 @@ public class OcrResult extends AppCompatActivity
      */
     public void performOCR(Bitmap photo)
     {
-        InputImage image = InputImage.fromBitmap(photo, 0);
-        TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
-
-        recognizer.process(image).addOnSuccessListener(visionText ->
-        {
-            txtStatus.setText(R.string.java_message_ocr_completion);
-            processTextRecognitionResult(visionText);
-        }).addOnFailureListener(e ->
-                {
-                    txtStatus.setText(R.string.java_error_ocr_fail);
-                    Log.e("OCR Error", e.getMessage());
-                }
-
-
-        );
-    }
-
-    /**
-     * Process the OCR result
-     *
-     * @param visionText result returned from successful OCR recognition of mlkit
-     */
-    public void processTextRecognitionResult(Text visionText)
-    {
-        ArrayList<String> blocks = new ArrayList<>();
-
-        for (Text.TextBlock block: visionText.getTextBlocks())
-        {
-            blocks.add(block.getText());
-        }
-
-        if (blocks.size() == 0)
-        {
-            txtStatus.append(" " + getString(R.string.java_message_ocr_no_text_detected));
-        }
-        else
-        {
-            txtStatus.append(" " + getString(R.string.java_message_ocr_text_detected));
-        }
-        displayEditableTable(blocks);
+        OpenCVOcr ocr = new OpenCVOcr(photo);
+        //List<String> data = ocr.processImage();
+        ImageView imgProcessedPhoto = findViewById(R.id.result_imgProcessedPhoto);
+        ocr.processImage();
+        imgProcessedPhoto.setImageBitmap(ocr.getProcessedImage());//original image is used as the image is displayed with rectangle
+        txtStatus.setText(R.string.java_message_ocr_completion);
+        //displayEditableTable(data);
     }
 
     /**
