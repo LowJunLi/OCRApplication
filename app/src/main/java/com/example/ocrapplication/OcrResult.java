@@ -2,9 +2,12 @@ package com.example.ocrapplication;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,26 +27,22 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.mlkit.vision.common.InputImage;
-import com.google.mlkit.vision.text.Text;
-import com.google.mlkit.vision.text.TextRecognition;
-import com.google.mlkit.vision.text.TextRecognizer;
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class OcrResult extends AppCompatActivity
+public class OcrResult extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<String>>
 {
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private String currentPhotoPath;
+    private Bitmap photo;
+    private OpenCVOcr openCVOcr;
     private TextView txtStatus;
     private DBHelper dbHelper;
 
@@ -179,13 +178,32 @@ public class OcrResult extends AppCompatActivity
      */
     public void performOCR(Bitmap photo)
     {
-        OpenCVOcr ocr = new OpenCVOcr(photo);
-        //List<String> data = ocr.processImage();
-        ImageView imgProcessedPhoto = findViewById(R.id.result_imgProcessedPhoto);
-        ocr.processImage();
-        imgProcessedPhoto.setImageBitmap(ocr.getProcessedImage());//original image is used as the image is displayed with rectangle
+        this.photo = photo;
+        txtStatus.setText(getString(R.string.result_processing));
+        LoaderManager.getInstance(this).restartLoader(0, null, this);
+    }
+
+    @NonNull
+    @Override
+    public Loader<List<String>> onCreateLoader(int id, @Nullable Bundle args)
+    {
+        openCVOcr = new OpenCVOcr();
+        return new OcrLoader(this, photo, openCVOcr);
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<List<String>> loader, List<String> data)
+    {
         txtStatus.setText(R.string.java_message_ocr_completion);
-        //displayEditableTable(data);
+        ImageView imgProcessedPhoto = findViewById(R.id.result_imgProcessedPhoto);
+        imgProcessedPhoto.setImageBitmap(openCVOcr.getProcessedImage());
+        displayEditableTable(data);//original image is used as the image is displayed with rectangle
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<List<String>> loader)
+    {
+
     }
 
     /**

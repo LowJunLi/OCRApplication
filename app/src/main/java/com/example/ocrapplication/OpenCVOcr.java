@@ -6,6 +6,7 @@ import static org.opencv.imgproc.Imgproc.boundingRect;
 import static org.opencv.imgproc.Imgproc.contourArea;
 import static org.opencv.imgproc.Imgproc.cvtColor;
 import static org.opencv.imgproc.Imgproc.dilate;
+import static org.opencv.imgproc.Imgproc.drawContours;
 import static org.opencv.imgproc.Imgproc.erode;
 import static org.opencv.imgproc.Imgproc.findContours;
 import static org.opencv.imgproc.Imgproc.getStructuringElement;
@@ -35,11 +36,15 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.utils.Converters;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class OpenCVOcr
 {
@@ -55,15 +60,11 @@ public class OpenCVOcr
         }
     }
 
-    private final Mat originalImage;
+    private Mat originalImage;
 
-    public OpenCVOcr(@NonNull Bitmap img)
+    public OpenCVOcr()
     {
-        originalImage = new Mat();
-        //bitmapToMat only accepts certain bitmap types, so this line ensure the bitmap is of type ARGB_8888
-        Bitmap bmp32 = img.copy(Bitmap.Config.ARGB_8888, true);
-        //convert bitmap to OpenCV Mat
-        Utils.bitmapToMat(bmp32, originalImage);
+
     }
 
     /**
@@ -83,8 +84,14 @@ public class OpenCVOcr
      * @see <a href="https://answers.opencv.org/question/63847/how-to-extract-tables-from-an-image/"
      * How to extract tables from an image?</a>
      */
-    public List<String> processImage()
+    public List<String> processImage(Bitmap photo)
     {
+        originalImage = new Mat();
+        //bitmapToMat only accepts certain bitmap types, so this line ensure the bitmap is of type ARGB_8888
+        Bitmap bmp32 = photo.copy(Bitmap.Config.ARGB_8888, true);
+        //convert bitmap to OpenCV Mat
+        Utils.bitmapToMat(bmp32, originalImage);
+
         Mat grayImage = new Mat();
         //ARGB image has 4 channels
         // Transform source image to gray if it is not
@@ -141,7 +148,7 @@ public class OpenCVOcr
         // Find external contours from the mask, which most probably will belong to tables or to images
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();
-        findContours(grid, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE, new Point(0, 0));
+        findContours(grid, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE, new Point(0, 0));
 
         List<MatOfPoint2f> newContours = new ArrayList<>();
         for (MatOfPoint point : contours)
@@ -154,34 +161,33 @@ public class OpenCVOcr
         Rect[] boundRect = new Rect[contours.size()];
         Arrays.fill(boundRect, new Rect()); //initialize array
         List<Mat> rois = new ArrayList<>();
+        Log.d("Check contours", "The contours size is " + contours.size());
 
         for (int i = 0; i < contours.size(); i++)
         {
             // find the area of each contour
             double area = contourArea(contours.get(i));
-
             //        // filter individual lines of blobs that might exist and they do not represent a table
-            if (area < 100) // value is randomly chosen, you will need to find that by yourself with trial and error procedure
+            if (area < 1000) // value is randomly chosen, you will need to find that by yourself with trial and error procedure
                 continue;
 
             approxPolyDP(newContours.get(i), contoursPoly[i], 3, true);
             boundRect[i] = boundingRect(contoursPoly[i]);
 
-            // find the number of joints that each table has
-            Mat roi = new Mat(joint, boundRect[i]);
-
-            ArrayList<MatOfPoint> jointsContours = new ArrayList<>();
-            findContours(roi, jointsContours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
-
-            // if the number is not more than 5 then most likely it not a table
-            if (jointsContours.size() <= 4)
+            /*
+             * Reject rect with less than 32 height or width because MLKit OCR can only accept image with minimum 32 height and width
+             */
+            if(boundRect[i].height < 32 || boundRect[i].width < 32)
                 continue;
 
             rois.add(new Mat(originalImage, boundRect[i]).clone());
 
-            //        drawContours( rsz, contours, i, Scalar(0, 0, 255), CV_FILLED, 8, vector<Vec4i>(), 0, Point() );
-            rectangle(originalImage, boundRect[i].tl(), boundRect[i].br(), new Scalar(0, 255, 0), 1, 8, 0);
+            //drawContours(originalImage, contours, i, new Scalar(0, 0, 255), 2, 8, hierarchy, 0, new Point());
+            rectangle(originalImage, boundRect[i].tl(), boundRect[i].br(), new Scalar(0, 255, 0), 2, 8, 0);
         }
+
+        Log.d("Check rois", "The rois size is " + rois.size());
+
 
         List<String> data = new ArrayList<>(rois.size());
         for (int i = 0; i < rois.size(); ++i)
@@ -194,20 +200,26 @@ public class OpenCVOcr
              * with the data within the rectangles/tables. */
             InputImage image = InputImage.fromBitmap(imagePart, 0);
             TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
+
             try
             {
-                Tasks.await(
-                        recognizer.process(image).addOnSuccessListener(visionText -> data.add(visionText.getText())));
+                Tasks.await(recognizer.process(image).addOnSuccessListener(visionText ->
+                {
+                    Log.i("Check OCR", "OCR success");
+                    data.add(visionText.getText());
+                }).addOnFailureListener(ex ->
+                {
+                    Log.e("Check OCR", "OCR fail because " + ex.getMessage());
+                }));
             }
             catch (ExecutionException | InterruptedException ex)
             {
-                Log.e("Await exception", "Tasks.await fail because " + ex.getMessage());
+                Log.e("Check Async", "OCR fail because " + ex.getMessage());
             }
 
         }
         return data;
     }
-
 
 
 }
