@@ -2,6 +2,7 @@ package com.example.ocrapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
@@ -20,6 +21,7 @@ public class Login extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //disable dark mode
         super.onCreate(savedInstanceState);
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -34,34 +36,36 @@ public class Login extends AppCompatActivity
         {
             gotoPage(MainActivity.class, true);
         }
-
-        setContentView(R.layout.activity_login);
-
-        etUsername = findViewById(R.id.login_etUsername);
-        etPassword = findViewById(R.id.login_etPassword);
-
-        Button btnLogin = findViewById(R.id.login_btnLogin);
-        btnLogin.setOnClickListener(v ->
+        else
         {
-            String inputUsername = etUsername.getText().toString().trim();
-            String inputPassword = etPassword.getText().toString().trim();
+            setContentView(R.layout.activity_login);
 
-            if(checkEmptyField(inputUsername, inputPassword))
-            {
-                displayToast(getString(R.string.java_message_enter_username_password));
-            }
-            else if (validationPass(inputUsername, inputPassword))
-            {
-                gotoPage(MainActivity.class, true);
-            }
-            else //validation fail
-            {
-                displayToast(getString(R.string.java_error_invalid_username_password));
-            }
-        });
+            etUsername = findViewById(R.id.login_etUsername);
+            etPassword = findViewById(R.id.login_etPassword);
 
-        Button btnForget = findViewById(R.id.login_btnForget);
-        btnForget.setOnClickListener(v -> gotoPage(EmailLogin.class, false));
+            Button btnLogin = findViewById(R.id.login_btnLogin);
+            btnLogin.setOnClickListener(v ->
+            {
+                String inputUsername = etUsername.getText().toString().trim();
+                String inputPassword = etPassword.getText().toString().trim();
+
+                if(checkEmptyField(inputUsername, inputPassword))
+                {
+                    displayToast(getString(R.string.java_message_enter_username_password));
+                }
+                else if (validationPass(inputUsername, inputPassword))
+                {
+                    gotoPage(MainActivity.class, true);
+                }
+                else //validation fail
+                {
+                    displayToast(getString(R.string.java_error_invalid_username_password));
+                }
+            });
+
+            Button btnForget = findViewById(R.id.login_btnForget);
+            btnForget.setOnClickListener(v -> gotoPage(EmailLogin.class, false));
+        }
 
     }
 

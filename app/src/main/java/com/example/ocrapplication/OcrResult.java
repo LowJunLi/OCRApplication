@@ -12,6 +12,7 @@ import androidx.loader.content.Loader;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,12 +28,20 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.text.Text;
+import com.google.mlkit.vision.text.TextRecognition;
+import com.google.mlkit.vision.text.TextRecognizer;
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -139,15 +148,14 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
     }
 
     /**
-     *  Let user crop the image
+     * Let user crop the image
      *
-     * @param sourceUri       the source of the image
-     * @param destinationUri  the destination of the cropped image
+     * @param sourceUri      the source of the image
+     * @param destinationUri the destination of the cropped image
      */
     private void openCropActivity(Uri sourceUri, Uri destinationUri)
     {
-        UCrop.of(sourceUri, destinationUri)
-                .start(this);
+        UCrop.of(sourceUri, destinationUri).start(this);
     }
 
     @Override
@@ -165,7 +173,7 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
                 imgPhoto.setImageBitmap(bitmap);
                 performOCR(bitmap);
             }
-            catch(IOException ex)
+            catch (IOException ex)
             {
                 Log.e("URI resolve error", ex.getMessage());
             }
@@ -207,7 +215,79 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
     }
 
     /**
-     *  Display an editable table to let user edit the result of OCR recognition
+     * Perform OCR on the picture
+     */
+    public void performOCR2(Bitmap photo)
+    {
+        InputImage image = InputImage.fromBitmap(photo, 0);
+        TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
+
+        recognizer.process(image).addOnSuccessListener(visionText ->
+        {
+            txtStatus.setText(R.string.java_message_ocr_completion);
+            processTextRecognitionResult(visionText);
+        }).addOnFailureListener(e ->
+                {
+                    txtStatus.setText(R.string.java_error_ocr_fail);
+                    Log.e("OCR Error", e.getMessage());
+                }
+
+
+        );
+    }
+
+    /**
+     * Process the OCR result
+     *
+     * @param visionText result returned from successful OCR recognition of mlkit
+     */
+    public void processTextRecognitionResult(Text visionText)
+    {
+        ArrayList<String> allTexts = new ArrayList<>();
+        ArrayList<Text.Line> lines = new ArrayList<>();
+
+        for(Text.TextBlock block: visionText.getTextBlocks())
+        {
+            lines.addAll(block.getLines());
+        }
+
+        Collections.sort(lines, new Comparator<Text.Line>()
+        {
+            @Override
+            public int compare(Text.Line o1, Text.Line o2)
+            {
+                Rect rect1 = o1.getBoundingBox();
+                Rect rect2 = o2.getBoundingBox();
+                int diffY;
+                if (rect1 != null && rect2 != null)
+                {
+                    diffY = rect1.top - rect2.top;
+                    if (diffY > 50 || diffY < -50) //if y axis difference are large
+                        return Integer.compare(rect1.right, rect2.right);
+                    return Integer.compare(rect1.top, rect2.top);
+                }
+                return 0;
+            }
+        });
+
+        for (Text.Line line : lines)
+        {
+            allTexts.add(line.getText());
+        }
+
+        if (allTexts.size() == 0)
+        {
+            txtStatus.append(" " + getString(R.string.java_message_ocr_no_text_detected));
+        }
+        else
+        {
+            txtStatus.append(" " + getString(R.string.java_message_ocr_text_detected));
+        }
+        displayEditableTable(allTexts);
+    }
+
+    /**
+     * Display an editable table to let user edit the result of OCR recognition
      *
      * @param data all the text recognized by OCR
      */
@@ -215,19 +295,26 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
     {
         TableLayout table = findViewById(R.id.result_tableLayout);
         table.removeAllViews();
+        addHeader(table);
+
+        if(data == null)
+        {
+            txtStatus.setText(getString(R.string.java_message_ocr_no_text_detected));
+            return;
+        }
 
         final int colNum = 6;
         int remainderCol = colNum - (data.size() % colNum);
 
         //add empty string to the arraylist to ensure the size of list is multiple of colNum
-        for(int i = 0; i < remainderCol; i++)
+        for (int i = 0; i < remainderCol; i++)
         {
             data.add("");
         }
 
-        addHeader(table);
 
-        for (int i = 0; i < data.size();)
+
+        for (int i = 0; i < data.size(); )
         {
             TableRow row = new TableRow(this);
             row.setBackgroundResource(R.drawable.row_border);
@@ -275,7 +362,7 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
     /**
      * Add header to the table
      *
-     * @param table  the table to add header
+     * @param table the table to add header
      */
     public void addHeader(TableLayout table)
     {
@@ -306,13 +393,13 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
     }
 
     /**
-     *  Add empty row to the table
+     * Add empty row to the table
      */
     public void addRow()
     {
         TableLayout table = findViewById(R.id.result_tableLayout);
 
-        if(table.getChildCount() == 0) //if table has no child
+        if (table.getChildCount() == 0) //if table has no child
         {
             addHeader(table);
         }
@@ -362,8 +449,8 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
     /**
      * Get all data from table
      *
-     * @param tableID  the resource ID of table layout
-     * @return         the table data in 2D array. Return null if any cell contains invalid data.
+     * @param tableID the resource ID of table layout
+     * @return the table data in 2D array. Return null if any cell contains invalid data.
      */
     @Nullable
     public String[][] getContentInTable(int tableID)
@@ -374,7 +461,7 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
         String[][] data = new String[rowNum - 1][colNum];
 
         //start at i = 1 because i = 0 is header
-        for(int i = 1; i < rowNum; i++)
+        for (int i = 1; i < rowNum; i++)
         {
             View child = table.getChildAt(i);
             if (child instanceof TableRow)
@@ -383,11 +470,11 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
                 for (int j = 0; j < colNum; j++)
                 {
                     View view = row.getChildAt(j);
-                    if(view instanceof EditText)
+                    if (view instanceof EditText)
                     {
                         EditText editText = ((EditText) view);
 
-                        if(validateCell(editText, j))
+                        if (validateCell(editText, j))
                         {
                             data[i - 1][j] = editText.getText().toString();
                         }
@@ -411,17 +498,17 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
     public boolean validateCell(EditText editText, int colIndex)
     {
         String input = editText.getText().toString();
-        switch(colIndex)
+        switch (colIndex)
         {
             case 0: //date
-                if(!checkIsValidDate(input))
+                if (!checkIsValidDate(input))
                 {
                     editText.setError(getString(R.string.java_error_invalid_date));
                     return false;
                 }
                 return true;
             case 1: //time
-                if(!checkIsValidTime(input))
+                if (!checkIsValidTime(input))
                 {
                     editText.setError(getString(R.string.java_error_invalid_time));
                     return false;
@@ -433,20 +520,20 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
                 try
                 {
                     double temperature = Double.parseDouble(input);
-                    if(temperature < 35 || temperature > 42)
+                    if (temperature < 35 || temperature > 42)
                     {
                         editText.setError(getString(R.string.java_error_invalid_temperature));
                         return false;
                     }
                 }
-                catch(NumberFormatException ex)
+                catch (NumberFormatException ex)
                 {
                     editText.setError(getString(R.string.java_error_non_numeric_input));
                     return false;
                 }
                 return true;
             case 4: //phone
-                if(input.matches("^(\\+?6?01)[0-46-9]-*[0-9]{7,8}$"))//regex to check if the number is malaysian phone number
+                if (input.matches("^(\\+?6?01)[0-46-9]-*[0-9]{7,8}$"))//regex to check if the number is malaysian phone number
                 {
                     return true;
                 }
@@ -467,8 +554,8 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
     /**
      * Check if the date is valid
      *
-     * @param input  date input
-     * @return       true if the input is a valid date, otherwise false
+     * @param input date input
+     * @return true if the input is a valid date, otherwise false
      */
     public boolean checkIsValidDate(String input)
     {
@@ -488,8 +575,8 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
     /**
      * Check if the time is valid
      *
-     * @param input  time input
-     * @return       true if the input is a valid time, otherwise false
+     * @param input time input
+     * @return true if the input is a valid time, otherwise false
      */
     public boolean checkIsValidTime(String input)
     {
@@ -508,12 +595,12 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
 
 
     /**
-     *  Save data displayed in the table to database
+     * Save data displayed in the table to database
      */
     public void saveToDatabase()
     {
         String[][] data = getContentInTable(R.id.result_tableLayout);
-        if(data == null)
+        if (data == null)
         {
             displayToast(getString(R.string.java_error_unable_to_save));
             return;
@@ -552,7 +639,7 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
             String phone = datum[4];
             String remark = datum[5];
 
-            if(dbHelper.insertRecord(enterDateTime, name, temperature, phone, remark))
+            if (dbHelper.insertRecord(enterDateTime, name, temperature, phone, remark))
             {
                 displayToast(getString(R.string.java_message_insert_success));
                 Intent intent = new Intent(this, MainActivity.class);
