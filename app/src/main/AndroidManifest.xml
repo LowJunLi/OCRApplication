@@ -31,15 +31,13 @@
             android:configChanges="orientation"
             android:exported="true" />
         <activity
-            android:name=".ImportExportDatabase"
+            android:name=".ExportDatabase"
             android:screenOrientation="portrait"
             android:configChanges="orientation"
             android:exported="true" />
-
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="ocr" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.ocrapplication"

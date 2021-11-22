@@ -340,7 +340,8 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
             {
                 // row is your row, the parent of the clicked button
                 View row1 = (View) v.getParent();
-                // container contains all the rows, you could keep a variable somewhere else to the container which you can refer to here
+                // container contains all the rows, you could keep a variable somewhere else to the container which
+                // you can refer to here
                 ViewGroup container = ((ViewGroup) row1.getParent());
                 // delete the row and invalidate your view so it gets redrawn
                 container.removeView(row1);
@@ -476,7 +477,7 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
 
                         if (validateCell(editText, j))
                         {
-                            data[i - 1][j] = editText.getText().toString();
+                            data[i - 1][j] = editText.getText().toString().trim();
                         }
                         else
                         {
@@ -497,7 +498,7 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
      */
     public boolean validateCell(EditText editText, int colIndex)
     {
-        String input = editText.getText().toString();
+        String input = editText.getText().toString().trim();
         switch (colIndex)
         {
             case 0: //date
@@ -639,14 +640,11 @@ public class OcrResult extends AppCompatActivity implements LoaderManager.Loader
             String phone = datum[4];
             String remark = datum[5];
 
-            if (dbHelper.insertRecord(enterDateTime, name, temperature, phone, remark))
-            {
-                displayToast(getString(R.string.java_message_insert_success));
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
+            dbHelper.insertRecord(enterDateTime, name, temperature, phone, remark);
         }
-
+        displayToast(getString(R.string.java_message_insert_success));
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

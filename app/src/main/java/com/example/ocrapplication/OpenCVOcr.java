@@ -74,7 +74,7 @@ public class OpenCVOcr
      */
     public Bitmap getProcessedImage()
     {
-        Mat image = grid;
+        Mat image = originalImage;
         Bitmap processedImageBitmap = Bitmap.createBitmap(image.cols(), image.rows(), Bitmap.Config.RGB_565);
         //convert Mat to bitmap
         Utils.matToBitmap(image, processedImageBitmap);
@@ -114,7 +114,8 @@ public class OpenCVOcr
         // Apply adaptiveThreshold at the bitwise_not of gray
         Mat bitwiseNotGrayImage = new Mat();
         Core.bitwise_not(grayImage, bitwiseNotGrayImage);
-        Imgproc.adaptiveThreshold(bitwiseNotGrayImage, bitwiseNotGrayImage, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, -2);
+        Imgproc.adaptiveThreshold(bitwiseNotGrayImage, bitwiseNotGrayImage, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C,
+                Imgproc.THRESH_BINARY, 15, -2);
 
         // Create the images that will use to extract the horizontal and vertical lines
         Mat verticalLine = bitwiseNotGrayImage.clone();
@@ -151,8 +152,6 @@ public class OpenCVOcr
         Mat joint = new Mat();
         Core.bitwise_and(horizontalLine, verticalLine, joint);
 
-        //end of image processing
-
         // Find external contours from the mask, which most probably will belong to tables or to images
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();
@@ -177,7 +176,6 @@ public class OpenCVOcr
 
         List<Rect> boundRect = new ArrayList<>(contours.size());
         double totalHeight = 0;
-        double totalWidth = 0;
 
         List<Rect> boxes = new ArrayList<>();
         for (int i = 0; i < contours.size(); i++)
@@ -202,7 +200,6 @@ public class OpenCVOcr
                 continue;
             }
             totalHeight += h;
-            totalWidth += w;
             rectangle(originalImage, new Point(x, y), new Point(x + w, y + h), new Scalar(0, 255, 0), 2, 8, 0);
             boxes.add(new Rect(x, y, w, h));
         }
@@ -213,7 +210,6 @@ public class OpenCVOcr
         }
 
         double meanHeight = totalHeight / boxes.size();
-        double meanWidth = totalWidth / boxes.size();
 
         Collections.sort(boxes, new Comparator<Rect>()
         {
@@ -236,7 +232,6 @@ public class OpenCVOcr
 
         //Rect previous = boxes.get(0);
         List<List<String>> data = new ArrayList<>();
-
         List<String> singleRow = new ArrayList<>(colNum);
         for (int i = 0; i < boxes.size(); i++)
         {
@@ -297,8 +292,6 @@ public class OpenCVOcr
         //convert Mat to bitmap
         Utils.matToBitmap(img, imagePart);
 
-        /* Now you can do whatever post process you want
-         * with the data within the rectangles/tables. */
         InputImage image = InputImage.fromBitmap(imagePart, 0);
         String text = "";
         TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);

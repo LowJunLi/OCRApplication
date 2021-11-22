@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -22,7 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 
-public class ImportExportDatabase extends AppCompatActivity
+public class ExportDatabase extends AppCompatActivity
 {
     ActivityResultLauncher<Intent> importLauncher;
 
@@ -30,12 +31,14 @@ public class ImportExportDatabase extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_import_export_database);
+        setContentView(R.layout.activity_export_database);
 
         Button btnExport = findViewById(R.id.importExport_btnExport);
         Button btnImport = findViewById(R.id.importExport_btnImport);
+        btnImport.setVisibility(View.INVISIBLE);
+        findViewById(R.id.importExport_txtImport).setVisibility(View.INVISIBLE);
 
-        importLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->
+        /*importLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->
         {
             if (result.getResultCode() == Activity.RESULT_OK)
             {
@@ -49,11 +52,10 @@ public class ImportExportDatabase extends AppCompatActivity
                 displayToast(getString(R.string.java_error_import_fail));
                 Log.e("Import failure", "No file selected");
             }
-        });
+        });*/
 
         btnExport.setOnClickListener(v -> exportDatabase());
-
-        btnImport.setOnClickListener(v -> selectFile());
+        //btnImport.setOnClickListener(v -> selectFile());
     }
 
     private void copyFile(FileInputStream fromFile, FileOutputStream toFile) throws IOException
@@ -206,7 +208,7 @@ public class ImportExportDatabase extends AppCompatActivity
         else
         {
             Log.e("Import failure", "Database not exist");
-            displayToast(getString(R.string.java_error_import_fail));
+            displayToast(getString(R.string.java_error_import_fail) + " " + getString(R.string.java_error_database_not_exist));
         }
     }
 

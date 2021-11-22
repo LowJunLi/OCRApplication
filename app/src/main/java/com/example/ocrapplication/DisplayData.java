@@ -35,6 +35,10 @@ public class DisplayData extends AppCompatActivity
     private double filterMaxTemperature;
     private boolean filterIsAscending;
     private DBHelper dbHelper;
+    private final int paddingLeft = 10;
+    private final int paddingTop = 0;
+    private final int paddingRight = 10;
+    private final int paddingBottom = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -84,7 +88,7 @@ public class DisplayData extends AppCompatActivity
         Cursor cursor;
         /////name searching/////
         EditText editText = findViewById(R.id.display_etSearch);
-        name = editText.getText().toString();
+        name = editText.getText().toString().trim();
 
         /////date time filter/////
         if (dateTimeFilterEnabled) //if this filter enabled, the filter variable has been set (not null)
@@ -120,24 +124,30 @@ public class DisplayData extends AppCompatActivity
 
                 TextView tvID = new TextView(this);
                 tvID.setText(String.valueOf(cursor.getInt(0)));
+                tvID.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 
                 TextView tvDateTime = new TextView(this);
                 long unixTime = cursor.getLong(1);
                 Date dateTime = new Date(unixTime);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH);
                 tvDateTime.setText(dateFormat.format(dateTime));
+                tvDateTime.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 
                 TextView tvName = new TextView(this);
                 tvName.setText(cursor.getString(2));
+                tvName.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 
                 TextView tvTemperature = new TextView(this);
                 tvTemperature.setText(String.valueOf(cursor.getDouble(3)));
+                tvTemperature.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 
                 TextView tvPhone = new TextView(this);
                 tvPhone.setText(cursor.getString(4));
+                tvPhone.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 
                 TextView tvRemark = new TextView(this);
                 tvRemark.setText(cursor.getString(5));
+                tvRemark.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 
                 Button btnDelete = new Button(this);
                 btnDelete.setText(R.string.btnDelete);
@@ -196,16 +206,22 @@ public class DisplayData extends AppCompatActivity
 
         TextView tvID = new TextView(this);
         tvID.setText(R.string.java_table_header_ID);
+        tvID.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         TextView tvDateTime = new TextView(this);
         tvDateTime.setText(R.string.java_table_header_date_time);
+        tvDateTime.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         TextView tvName = new TextView(this);
         tvName.setText(R.string.java_table_header_name);
+        tvName.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         TextView tvTemperature = new TextView(this);
         tvTemperature.setText(R.string.java_table_header_temperature);
+        tvTemperature.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         TextView tvPhone = new TextView(this);
         tvPhone.setText(R.string.java_table_header_phone);
+        tvPhone.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         TextView tvRemark = new TextView(this);
         tvRemark.setText(R.string.java_table_header_remark);
+        tvRemark.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 
         header.addView(tvID);
         header.addView(tvDateTime);
@@ -339,7 +355,6 @@ public class DisplayData extends AppCompatActivity
                     etMaxTemperature.setError(getString(R.string.java_error_non_numeric_input));
                     temperatureError = true;
                 }
-
                 if (temperatureError)
                 {
                     return;

@@ -44,6 +44,16 @@ public class LoginTest
         assertFalse(mockLoginClass.checkEmptyField("", "123"));
     }
 
+    /**
+     * {@link Login#checkEmptyField(String, String)}
+     */
+    @Test
+    @Tag("UnitTest")
+    public void emptyPasswordIsInvalid()
+    {
+        assertFalse(mockLoginClass.checkEmptyField("Low", ""));
+    }
+
 
 
 }

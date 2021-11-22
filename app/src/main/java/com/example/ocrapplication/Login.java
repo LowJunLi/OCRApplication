@@ -120,7 +120,7 @@ public class Login extends AppCompatActivity
         Intent intent = new Intent(this, className);
         if(activityClearTop)
         {
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         }
         startActivity(intent);
     }

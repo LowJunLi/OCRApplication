@@ -28,7 +28,6 @@ public class EmailLogin extends AppCompatActivity
         {
             String recoveryEmail = etRecoveryEmail.getText().toString().trim();
 
-
             if(recoveryEmail.isEmpty())
             {
                 displayToast(getString(R.string.java_error_empty_recovery_email));
@@ -45,6 +44,7 @@ public class EmailLogin extends AppCompatActivity
                 editor.apply();
                 displayToast(getString(R.string.java_message_password_reset_complete));
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });

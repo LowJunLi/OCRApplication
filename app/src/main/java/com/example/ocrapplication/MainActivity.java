@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
 
         btnViewAllData.setOnClickListener(v -> gotoPage(DisplayData.class));
         btnManageAccount.setOnClickListener(v -> gotoPage(ManageAccount.class));
-        btnDownload.setOnClickListener(v -> gotoPage(ImportExportDatabase.class));
+        btnDownload.setOnClickListener(v -> gotoPage(ExportDatabase.class));
         btnCamera.setOnClickListener(v -> gotoPage(OcrResult.class));
     }
 
