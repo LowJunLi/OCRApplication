@@ -121,7 +121,7 @@ public class OpenCVOcr
         Mat verticalLine = bitwiseNotGrayImage.clone();
         Mat horizontalLine = bitwiseNotGrayImage.clone();
 
-        int scale = 100; // modify this variable in order to increase/decrease the amount of lines to be detected
+        int scale = 100; // the amount of lines to be detected
         // Specify size on horizontal axis
         int horizontalSize = horizontalLine.cols() / scale;
         // Create structure element for extracting horizontal lines through morphology operations
@@ -149,10 +149,10 @@ public class OpenCVOcr
 
         // find the joints between the lines of the tables, we will use this information in order to discriminate
         // tables from pictures (tables will contain more than 4 joints while a picture only 4 (i.e. at the corners))
-        Mat joint = new Mat();
-        Core.bitwise_and(horizontalLine, verticalLine, joint);
+        //Mat joint = new Mat();
+        //Core.bitwise_and(horizontalLine, verticalLine, joint);
 
-        // Find external contours from the mask, which most probably will belong to tables or to images
+        // Find contours from the mask
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();
         findContours(grid, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE, new Point(0, 0));
